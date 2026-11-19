@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+data/raw/
+data/interim/
+data/processed/
+artifacts/*
+!artifacts/export/
+outputs/
+.vercel/
+.env
