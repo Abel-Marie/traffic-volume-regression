@@ -1,0 +1,70 @@
+{
+  "cleaning_log": [
+    {
+      "rule": "drop_exact_duplicate_rows",
+      "rows_before": 48204,
+      "rows_after": 48187,
+      "rows_removed": 17,
+      "values_changed": null,
+      "why": "The same record stored twice."
+    },
+    {
+      "rule": "drop_zero_kelvin_temperature",
+      "rows_before": 48187,
+      "rows_after": 48177,
+      "rows_removed": 10,
+      "values_changed": null,
+      "why": "0 K is a sensor error, not weather."
+    },
+    {
+      "rule": "drop_impossible_rainfall",
+      "rows_before": 48177,
+      "rows_after": 48176,
+      "rows_removed": 1,
+      "values_changed": null,
+      "why": "More than 100 mm in one hour is a sensor error."
+    },
+    {
+      "rule": "drop_closure_or_outage_hours",
+      "rows_before": 48176,
+      "rows_after": 48116,
+      "rows_removed": 60,
+      "values_changed": null,
+      "why": "Fewer than 100 vehicles in an hour: the road was closed or the counter was down."
+    },
+    {
+      "rule": "spread_holiday_to_whole_day",
+      "rows_before": 48116,
+      "rows_after": 48116,
+      "rows_removed": 0,
+      "values_changed": 1348,
+      "why": "The source marks a holiday only on its midnight row; every hour of that day is a holiday."
+    },
+    {
+      "rule": "name_holidays_with_no_midnight_row",
+      "rows_before": 48116,
+      "rows_after": 48116,
+      "rows_removed": 0,
+      "values_changed": 55,
+      "why": "A holiday whose midnight hour is missing from the data was never marked; the calendar names it."
+    },
+    {
+      "rule": "one_row_per_hour",
+      "rows_before": 48116,
+      "rows_after": 40518,
+      "rows_removed": 7598,
+      "values_changed": null,
+      "why": "Hours with several weather rows repeat the same volume; keep one row, with the most severe weather."
+    },
+    {
+      "rule": "treat_only_quiet_holidays_as_holidays",
+      "rows_before": 40518,
+      "rows_after": 40518,
+      "rows_removed": 0,
+      "values_changed": 550,
+      "why": "Named days on which traffic stays near normal (Columbus Day, Veterans Day and others) are ordinary days for the model; only the quiet holidays listed in the configuration count."
+    }
+  ],
+  "hours_after_cleaning": 40518,
+  "hours_used": 40518
+}

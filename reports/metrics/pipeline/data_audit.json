@@ -1,0 +1,98 @@
+{
+  "rows": 48204,
+  "columns": 9,
+  "missing_values": {},
+  "missing_cells_total": 0,
+  "exact_duplicate_rows": 17,
+  "hours_whose_rows_disagree_on_volume": 0,
+  "low_volume_hours": 46,
+  "low_volume_hours_by_year": {
+    "2012": 0,
+    "2013": 0,
+    "2014": 0,
+    "2015": 3,
+    "2016": 43,
+    "2017": 0,
+    "2018": 0
+  },
+  "quietest_regular_hour_mean": 276.7083333333333,
+  "precipitation_amounts_by_year": [
+    {
+      "year": 2012,
+      "rain_weather_rows": 253,
+      "of_which_rain_1h_recorded": 0,
+      "snow_weather_rows": 197,
+      "of_which_snow_1h_recorded": 0
+    },
+    {
+      "year": 2013,
+      "rain_weather_rows": 1236,
+      "of_which_rain_1h_recorded": 442,
+      "snow_weather_rows": 674,
+      "of_which_snow_1h_recorded": 0
+    },
+    {
+      "year": 2014,
+      "rain_weather_rows": 888,
+      "of_which_rain_1h_recorded": 758,
+      "snow_weather_rows": 79,
+      "of_which_snow_1h_recorded": 0
+    },
+    {
+      "year": 2015,
+      "rain_weather_rows": 919,
+      "of_which_rain_1h_recorded": 448,
+      "snow_weather_rows": 134,
+      "of_which_snow_1h_recorded": 21
+    },
+    {
+      "year": 2016,
+      "rain_weather_rows": 1680,
+      "of_which_rain_1h_recorded": 487,
+      "snow_weather_rows": 692,
+      "of_which_snow_1h_recorded": 10
+    },
+    {
+      "year": 2017,
+      "rain_weather_rows": 2017,
+      "of_which_rain_1h_recorded": 0,
+      "snow_weather_rows": 579,
+      "of_which_snow_1h_recorded": 0
+    },
+    {
+      "year": 2018,
+      "rain_weather_rows": 1538,
+      "of_which_rain_1h_recorded": 524,
+      "snow_weather_rows": 521,
+      "of_which_snow_1h_recorded": 0
+    }
+  ],
+  "named_days_never_marked": [
+    "2013-01-21",
+    "2014-07-04",
+    "2016-01-18"
+  ],
+  "first_hour": "2012-10-02 09:00:00",
+  "last_hour": "2018-09-30 23:00:00",
+  "distinct_hours": 40575,
+  "hours_with_several_rows": 5445,
+  "max_rows_per_hour": 6,
+  "hours_in_range": 52551,
+  "missing_hours": 11976,
+  "gaps_over_24h": 12,
+  "largest_gap_hours": 7387.0,
+  "largest_gap_ends": "2015-06-11 20:00:00",
+  "zero_kelvin_temps": 10,
+  "rain_over_limit": 1,
+  "zero_volume_rows": 2,
+  "holiday_rows": 61,
+  "rows_per_year": {
+    "2012": 2559,
+    "2013": 8573,
+    "2014": 4839,
+    "2015": 4373,
+    "2016": 9306,
+    "2017": 10605,
+    "2018": 7949
+  }
+}

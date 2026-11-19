@@ -1,0 +1,46 @@
+{
+  "table": [
+    {
+      "features": "Calendar and weather only (the deployed inputs)",
+      "lags": "none",
+      "usable": "any horizon",
+      "mse": 119919.96133367349,
+      "rmse": 346.29461637985867,
+      "mae": 224.07422021282193,
+      "r2": 0.9694874819459492
+    },
+    {
+      "features": "+ same hour last week",
+      "lags": "lag_168h",
+      "usable": "up to 7 days ahead",
+      "mse": 116359.36916701717,
+      "rmse": 341.1148914471738,
+      "mae": 220.72858965288987,
+      "r2": 0.9703934414839608
+    },
+    {
+      "features": "+ same hour yesterday",
+      "lags": "lag_24h, lag_168h",
+      "usable": "up to 1 day ahead",
+      "mse": 100104.84907086736,
+      "rmse": 316.39350352190763,
+      "mae": 205.1159754467312,
+      "r2": 0.9745292528399508
+    },
+    {
+      "features": "+ previous hour",
+      "lags": "lag_1h, lag_24h, lag_168h",
+      "usable": "next hour only; needs a live count feed",
+      "mse": 57963.84027306708,
+      "rmse": 240.75680732445983,
+      "mae": 156.6112754186798,
+      "r2": 0.9852516403178873
+    }
+  ],
+  "lag_available_share": {
+    "lag_1h": 0.9975898083323769,
+    "lag_24h": 0.9947205325375875,
+    "lag_168h": 0.9947205325375875
+  },
+  "settings": "hgb, default settings, every row"
+}

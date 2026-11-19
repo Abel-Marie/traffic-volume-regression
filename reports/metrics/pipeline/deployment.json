@@ -1,0 +1,16 @@
+{
+  "format": "onnx",
+  "model_kb": 139.3,
+  "model_version": "hgb-a5959e97b784",
+  "inputs": "calendar and weather",
+  "parity_max_abs_diff": 0.0010657505777089682,
+  "parity_rows": 200,
+  "parity_tolerance": 0.01,
+  "parity_ok": true,
+  "fallback": {
+    "model_kb": 139.3,
+    "model_version": "hgb-22eddc348a3d",
+    "inputs": "calendar only",
+    "parity_max_abs_diff": 0.001099953373113749
+  }
+}

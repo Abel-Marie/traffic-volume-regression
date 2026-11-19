@@ -1,0 +1,68 @@
+{
+  "note": "The first evaluation of the 2018 test year, kept for the record. After it, a review changed the holiday flag, repaired three unflagged holidays, removed road-closure hours and added HistGradientBoosting to the tuned pool; every choice was made on training and validation data. The test year was then scored a second time (reports/metrics/pipeline/test.json).",
+  "git_tag": "baseline-before-review",
+  "champion": {
+    "name": "rf",
+    "params": {
+      "max_depth": 12,
+      "max_features": 0.3,
+      "min_samples_leaf": 5,
+      "n_estimators": 141
+    },
+    "val_rmse": 375.56301814501387,
+    "val_r2": 0.9641117558609984
+  },
+  "model_kb": 12304.3,
+  "model_version": "rf-ff0a7c5805ff",
+  "test": {
+    "baseline": {
+      "mse": 219252.36656960487,
+      "rmse": 468.2439178137874,
+      "mae": 264.87364296583894,
+      "r2": 0.9437588363398592
+    },
+    "ridge": {
+      "mse": 218815.58104973403,
+      "rmse": 467.77727718406123,
+      "mae": 300.6072066301978,
+      "r2": 0.9438708776659885
+    },
+    "univariate": {
+      "mse": 830153.2434379902,
+      "rmse": 911.1274572956246,
+      "mae": 619.1375504519739,
+      "r2": 0.7870545930350512
+    },
+    "bivariate": {
+      "mse": 219184.86215639082,
+      "rmse": 468.17182973390317,
+      "mae": 264.8526451292841,
+      "r2": 0.9437761521244538
+    },
+    "champion": {
+      "mse": 141352.93577743,
+      "rmse": 375.96932824025686,
+      "mae": 223.14700819521457,
+      "r2": 0.9637410819354782
+    }
+  },
+  "test_ci": {
+    "mse": {
+      "low": 102825.70969124706,
+      "high": 187854.51991996935
+    },
+    "rmse": {
+      "low": 320.6644805450944,
+      "high": 433.4218586276299
+    },
+    "mae": {
+      "low": 203.63623090627993,
+      "high": 245.92084100381447
+    },
+    "r2": {
+      "low": 0.951469097203458,
+      "high": 0.9737983508631585
+    }
+  },
+  "rmse_reduction_vs_baseline": 0.19706521764202933
+}

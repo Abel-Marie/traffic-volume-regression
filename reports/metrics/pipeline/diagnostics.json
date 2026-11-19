@@ -1,0 +1,767 @@
+{
+  "train": {
+    "mse": 137338.52029730997,
+    "rmse": 370.5921212024211,
+    "mae": 238.31518467150852,
+    "r2": 0.9651053218225818
+  },
+  "validation": {
+    "mse": 120686.64074216431,
+    "rmse": 347.39982835655564,
+    "mae": 228.13905423261792,
+    "r2": 0.9692924075060222
+  },
+  "train_by_year": [
+    {
+      "year": 2012,
+      "hours": 2103,
+      "mse": 165086.9893391226,
+      "rmse": 406.3089825971395,
+      "mae": 244.89130478395901,
+      "r2": 0.9589390300755312
+    },
+    {
+      "year": 2013,
+      "hours": 7294,
+      "mse": 132601.48873937826,
+      "rmse": 364.1448732844913,
+      "mae": 236.880735869559,
+      "r2": 0.967840247783399
+    },
+    {
+      "year": 2014,
+      "hours": 4491,
+      "mse": 137075.0084743486,
+      "rmse": 370.23642240377785,
+      "mae": 224.6814334529589,
+      "r2": 0.9654326447261159
+    },
+    {
+      "year": 2015,
+      "hours": 3590,
+      "mse": 128797.53260304742,
+      "rmse": 358.88373131565527,
+      "mae": 225.85461036657279,
+      "r2": 0.9667842283662456
+    },
+    {
+      "year": 2016,
+      "hours": 7794,
+      "mse": 138370.39805044618,
+      "rmse": 371.98171736047215,
+      "mae": 251.47863443314083,
+      "r2": 0.963023870686139
+    }
+  ],
+  "validation_typical_weather": {
+    "mse": 127274.60968083212,
+    "rmse": 356.75567224759317,
+    "mae": 233.45742604255977,
+    "r2": 0.9676161601244765
+  },
+  "verdict": {
+    "gap": -0.06258172130215789,
+    "text": "Validation error is 6% below training error: no overfitting. If anything the training years are the harder ones to fit; the table of training error by year shows which. On the complexity curve the validation error is lowest at max_leaf_nodes = 16 (345) and the chosen setting (10) is within 2% of it: more capacity would not help, so the model is not underfitting either.",
+    "best_capacity": 16
+  },
+  "learning_curve": {
+    "train_sizes": [
+      1264,
+      2527,
+      6318,
+      12636,
+      18954,
+      25272
+    ],
+    "train_rmse": [
+      296.3031473639862,
+      284.94845507952243,
+      300.7297639192833,
+      337.8947834999502,
+      365.71341008159214,
+      370.5921212024211
+    ],
+    "val_rmse": [
+      561.077989934993,
+      491.5625641091583,
+      446.29823990273206,
+      373.03471917756127,
+      351.96374086981575,
+      347.39982835655564
+    ]
+  },
+  "complexity_curve": {
+    "param": "max_leaf_nodes",
+    "values": [
+      2,
+      3,
+      4,
+      6,
+      8,
+      16,
+      31,
+      64,
+      128
+    ],
+    "train_rmse": [
+      599.3762465349461,
+      452.6455708565991,
+      416.8211564035237,
+      393.3296202092513,
+      382.0832341021605,
+      351.8698691232931,
+      327.4555010672975,
+      292.5126510056915,
+      255.64443481826515
+    ],
+    "val_rmse": [
+      576.4375709719903,
+      423.5259747318236,
+      385.3251668637646,
+      360.95821632688006,
+      352.18325016534953,
+      344.7840284503833,
+      349.4617681657232,
+      359.01525554287866,
+      368.34323584022604
+    ],
+    "chosen": 10
+  },
+  "residuals": {
+    "by_hour": [
+      {
+        "hour": 0,
+        "mean": 92.15999694997176,
+        "rmse": 259.50523878882746
+      },
+      {
+        "hour": 1,
+        "mean": 38.734545217035496,
+        "rmse": 126.17049161941132
+      },
+      {
+        "hour": 2,
+        "mean": -9.13023986102223,
+        "rmse": 99.7151637719082
+      },
+      {
+        "hour": 3,
+        "mean": 10.832137907448242,
+        "rmse": 74.39778662906333
+      },
+      {
+        "hour": 4,
+        "mean": 33.46603390690155,
+        "rmse": 98.72984405478856
+      },
+      {
+        "hour": 5,
+        "mean": 74.20023779694704,
+        "rmse": 228.79024208883766
+      },
+      {
+        "hour": 6,
+        "mean": 47.0334063898388,
+        "rmse": 391.58751140096314
+      },
+      {
+        "hour": 7,
+        "mean": 42.366942888733966,
+        "rmse": 531.124112523685
+      },
+      {
+        "hour": 8,
+        "mean": 73.7312956769485,
+        "rmse": 509.4883096811359
+      },
+      {
+        "hour": 9,
+        "mean": 63.28656198583748,
+        "rmse": 411.0831657026061
+      },
+      {
+        "hour": 10,
+        "mean": 76.9864048725809,
+        "rmse": 317.49135961822685
+      },
+      {
+        "hour": 11,
+        "mean": 72.29459579248186,
+        "rmse": 297.0980708116674
+      },
+      {
+        "hour": 12,
+        "mean": 53.84680868957536,
+        "rmse": 302.9228543510814
+      },
+      {
+        "hour": 13,
+        "mean": 45.78524562491468,
+        "rmse": 312.3778447106072
+      },
+      {
+        "hour": 14,
+        "mean": 20.713946732129035,
+        "rmse": 296.83111442875014
+      },
+      {
+        "hour": 15,
+        "mean": 69.30335352123183,
+        "rmse": 328.92034330295604
+      },
+      {
+        "hour": 16,
+        "mean": 173.959686772275,
+        "rmse": 424.670973192807
+      },
+      {
+        "hour": 17,
+        "mean": 115.02713613183285,
+        "rmse": 403.8552071090013
+      },
+      {
+        "hour": 18,
+        "mean": 125.14522436390774,
+        "rmse": 363.56178047839404
+      },
+      {
+        "hour": 19,
+        "mean": 174.22870177459524,
+        "rmse": 304.35842526769034
+      },
+      {
+        "hour": 20,
+        "mean": 140.82580122431568,
+        "rmse": 295.37382801053656
+      },
+      {
+        "hour": 21,
+        "mean": 122.45972915369555,
+        "rmse": 394.1243054375697
+      },
+      {
+        "hour": 22,
+        "mean": 146.2381729405736,
+        "rmse": 520.6200170915926
+      },
+      {
+        "hour": 23,
+        "mean": 92.13426175460825,
+        "rmse": 464.4066536560926
+      }
+    ],
+    "by_day_type": [
+      {
+        "day_type": "other named day",
+        "rows": 120,
+        "mean": -62.58051542892078,
+        "rmse": 432.46346435412727
+      },
+      {
+        "day_type": "quiet holiday",
+        "rows": 144,
+        "mean": 136.6522356634386,
+        "rmse": 384.70822507715684
+      },
+      {
+        "day_type": "weekday",
+        "rows": 5936,
+        "mean": 50.71934730636006,
+        "rmse": 332.6543374182489
+      },
+      {
+        "day_type": "weekend",
+        "rows": 2513,
+        "mean": 149.43600473863964,
+        "rmse": 373.68493577915444
+      }
+    ],
+    "by_named_day": [
+      {
+        "holiday": "Christmas Day",
+        "hours": 24,
+        "mean": 150.4425027931328,
+        "rmse": 310.50005125225556
+      },
+      {
+        "holiday": "Columbus Day",
+        "hours": 24,
+        "mean": 38.757556096928745,
+        "rmse": 161.85915088183458
+      },
+      {
+        "holiday": "Independence Day",
+        "hours": 24,
+        "mean": 81.97085709199848,
+        "rmse": 316.07568804260495
+      },
+      {
+        "holiday": "Labor Day",
+        "hours": 24,
+        "mean": 244.234346899847,
+        "rmse": 447.15620509239966
+      },
+      {
+        "holiday": "Martin Luther King Jr Day",
+        "hours": 24,
+        "mean": -363.9418188042901,
+        "rmse": 613.7634936427305
+      },
+      {
+        "holiday": "Memorial Day",
+        "hours": 24,
+        "mean": 43.9939245886722,
+        "rmse": 293.1709543900169
+      },
+      {
+        "holiday": "New Years Day",
+        "hours": 24,
+        "mean": 295.1966399868962,
+        "rmse": 565.5983626390503
+      },
+      {
+        "holiday": "State Fair",
+        "hours": 24,
+        "mean": 154.36989890628215,
+        "rmse": 265.37936251532483
+      },
+      {
+        "holiday": "Thanksgiving Day",
+        "hours": 24,
+        "mean": 4.0751426200849705,
+        "rmse": 293.0682517473948
+      },
+      {
+        "holiday": "Veterans Day",
+        "hours": 24,
+        "mean": 227.80523373761662,
+        "rmse": 335.0521683271067
+      },
+      {
+        "holiday": "Washingtons Birthday",
+        "hours": 24,
+        "mean": -369.89344708114123,
+        "rmse": 591.2132167022424
+      }
+    ],
+    "worst": [
+      {
+        "date_time": "2017-11-24 07:00:00",
+        "holiday": "None",
+        "actual": 2419.0,
+        "predicted": 5911.098654641397,
+        "residual": -3492.098654641397
+      },
+      {
+        "date_time": "2017-12-05 07:00:00",
+        "holiday": "None",
+        "actual": 2334.0,
+        "predicted": 5613.667044018328,
+        "residual": -3279.667044018328
+      },
+      {
+        "date_time": "2017-11-24 06:00:00",
+        "holiday": "None",
+        "actual": 2101.0,
+        "predicted": 5264.328617086346,
+        "residual": -3163.3286170863457
+      },
+      {
+        "date_time": "2017-11-24 08:00:00",
+        "holiday": "None",
+        "actual": 2480.0,
+        "predicted": 5540.046239110566,
+        "residual": -3060.0462391105657
+      },
+      {
+        "date_time": "2017-12-05 08:00:00",
+        "holiday": "None",
+        "actual": 2160.0,
+        "predicted": 4906.855360313369,
+        "residual": -2746.8553603133687
+      },
+      {
+        "date_time": "2017-03-01 07:00:00",
+        "holiday": "None",
+        "actual": 3683.0,
+        "predicted": 6300.135493482365,
+        "residual": -2617.135493482365
+      },
+      {
+        "date_time": "2017-04-13 00:00:00",
+        "holiday": "None",
+        "actual": 3075.0,
+        "predicted": 708.0437063637007,
+        "residual": 2366.956293636299
+      },
+      {
+        "date_time": "2017-07-03 06:00:00",
+        "holiday": "None",
+        "actual": 3353.0,
+        "predicted": 5631.770178457281,
+        "residual": -2278.770178457281
+      },
+      {
+        "date_time": "2017-12-28 08:00:00",
+        "holiday": "None",
+        "actual": 2745.0,
+        "predicted": 5003.239408172149,
+        "residual": -2258.2394081721486
+      },
+      {
+        "date_time": "2017-07-03 08:00:00",
+        "holiday": "None",
+        "actual": 3356.0,
+        "predicted": 5606.8635475847,
+        "residual": -2250.8635475847004
+      }
+    ],
+    "worst_days": [
+      {
+        "day": "2017-11-24",
+        "hours": 24,
+        "rmse": 1364.8415100871625,
+        "mean_residual": -847.6383572081626,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-12-05",
+        "hours": 21,
+        "rmse": 1125.805733859926,
+        "mean_residual": -652.4396866855451,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-07-03",
+        "hours": 24,
+        "rmse": 1033.076637019139,
+        "mean_residual": -633.5622139883669,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-12-26",
+        "hours": 24,
+        "rmse": 826.1456800684786,
+        "mean_residual": -562.3012287506155,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-01-10",
+        "hours": 24,
+        "rmse": 810.6957644790748,
+        "mean_residual": -636.714610753898,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-03-01",
+        "hours": 24,
+        "rmse": 777.0058619325213,
+        "mean_residual": -256.64769981665404,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-12-28",
+        "hours": 24,
+        "rmse": 776.7377144643098,
+        "mean_residual": -546.6016397479931,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-12-02",
+        "hours": 24,
+        "rmse": 720.6141620779837,
+        "mean_residual": 568.6424778651108,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-09-30",
+        "hours": 24,
+        "rmse": 664.424383347033,
+        "mean_residual": 507.50519154293266,
+        "holiday": "None"
+      },
+      {
+        "day": "2017-01-11",
+        "hours": 24,
+        "rmse": 633.8258728560231,
+        "mean_residual": -426.54413799352875,
+        "holiday": "None"
+      }
+    ],
+    "over_prediction_share_of_large_errors": 0.3563218390804598
+  },
+  "slices": {
+    "by_segment": [
+      {
+        "group": "Weekday rush hours",
+        "hours": 2014,
+        "mean_volume": 5653.553128103277,
+        "baseline_rmse": 515.2731225631856,
+        "baseline_holiday_rmse": 487.1366719698326,
+        "champion_rmse": 435.96310654002855,
+        "reduction": 0.1539184027853725,
+        "share_of_hours": 0.23114885802823368,
+        "share_of_sq_error": 0.36402568708380834
+      },
+      {
+        "group": "Weekday midday",
+        "hours": 1265,
+        "mean_volume": 4858.387351778656,
+        "baseline_rmse": 268.74711715222276,
+        "baseline_holiday_rmse": 262.008464934403,
+        "champion_rmse": 244.71165132305018,
+        "reduction": 0.08943525081818271,
+        "share_of_hours": 0.1451853552163434,
+        "share_of_sq_error": 0.07203986789533956
+      },
+      {
+        "group": "Weekday evening",
+        "hours": 1012,
+        "mean_volume": 2875.0859683794465,
+        "baseline_rmse": 400.4245889542299,
+        "baseline_holiday_rmse": 397.4893847166053,
+        "champion_rmse": 375.6696730307735,
+        "reduction": 0.06182166781542475,
+        "share_of_hours": 0.11614828417307471,
+        "share_of_sq_error": 0.13582067144496268
+      },
+      {
+        "group": "Weekday night",
+        "hours": 1765,
+        "mean_volume": 987.1252124645893,
+        "baseline_rmse": 218.52232754853966,
+        "baseline_holiday_rmse": 213.15623643725255,
+        "champion_rmse": 210.15500791734698,
+        "reduction": 0.03829045628911343,
+        "share_of_hours": 0.2025708711121313,
+        "share_of_sq_error": 0.07413056047964993
+      },
+      {
+        "group": "Weekend",
+        "hours": 2513,
+        "mean_volume": 2757.7628332670115,
+        "baseline_rmse": 402.3538808758547,
+        "baseline_holiday_rmse": 402.3538808758547,
+        "champion_rmse": 373.68493577915444,
+        "reduction": 0.07125305970528462,
+        "share_of_hours": 0.28841960289223,
+        "share_of_sq_error": 0.3337157905372597
+      },
+      {
+        "group": "Quiet holiday",
+        "hours": 144,
+        "mean_volume": 2124.8888888888887,
+        "baseline_rmse": 1965.3860375167944,
+        "baseline_holiday_rmse": 373.15175302425087,
+        "champion_rmse": 384.70822507715684,
+        "reduction": 0.8042581875857712,
+        "share_of_hours": 0.016527028577986914,
+        "share_of_sq_error": 0.020267422558979755
+      }
+    ],
+    "by_month": [
+      {
+        "group": 1,
+        "hours": 744,
+        "mean_volume": 3120.2647849462364,
+        "baseline_rmse": 507.4975868558291,
+        "baseline_holiday_rmse": 426.08612648033596,
+        "champion_rmse": 383.3134275409328,
+        "reduction": 0.24469901440176656,
+        "share_of_hours": 0.0853896476529324,
+        "share_of_sq_error": 0.10395708383095094
+      },
+      {
+        "group": 2,
+        "hours": 657,
+        "mean_volume": 3388.9543378995436,
+        "baseline_rmse": 362.87518969624523,
+        "baseline_holiday_rmse": 350.8405787134773,
+        "champion_rmse": 348.78934668972386,
+        "reduction": 0.03881732178579722,
+        "share_of_hours": 0.0754045678870653,
+        "share_of_sq_error": 0.07600897560843627
+      },
+      {
+        "group": 3,
+        "hours": 740,
+        "mean_volume": 3505.4662162162163,
+        "baseline_rmse": 404.7031739748676,
+        "baseline_holiday_rmse": 385.3705689978471,
+        "champion_rmse": 350.3426783025727,
+        "reduction": 0.13432189112426063,
+        "share_of_hours": 0.0849305635257661,
+        "share_of_sq_error": 0.08637556438728577
+      },
+      {
+        "group": 4,
+        "hours": 711,
+        "mean_volume": 3415.537271448664,
+        "baseline_rmse": 364.2428120751305,
+        "baseline_holiday_rmse": 342.95399228722545,
+        "champion_rmse": 286.98751952290496,
+        "reduction": 0.21209833108879705,
+        "share_of_hours": 0.0816022036038104,
+        "share_of_sq_error": 0.05568890888550675
+      },
+      {
+        "group": 5,
+        "hours": 744,
+        "mean_volume": 3410.8131720430106,
+        "baseline_rmse": 454.57283743631564,
+        "baseline_holiday_rmse": 300.2598402003301,
+        "champion_rmse": 268.0098978636916,
+        "reduction": 0.4104137427673755,
+        "share_of_hours": 0.0853896476529324,
+        "share_of_sq_error": 0.05082152454920983
+      },
+      {
+        "group": 6,
+        "hours": 720,
+        "mean_volume": 3446.9125,
+        "baseline_rmse": 318.3409287834681,
+        "baseline_holiday_rmse": 309.7198227514218,
+        "champion_rmse": 291.70908172030886,
+        "reduction": 0.08365825646401226,
+        "share_of_hours": 0.08263514288993458,
+        "share_of_sq_error": 0.058264695834046795
+      },
+      {
+        "group": 7,
+        "hours": 738,
+        "mean_volume": 3299.451219512195,
+        "baseline_rmse": 521.1172427870899,
+        "baseline_holiday_rmse": 340.2599500521258,
+        "champion_rmse": 347.4496679189151,
+        "reduction": 0.3332600816264475,
+        "share_of_hours": 0.08470102146218295,
+        "share_of_sq_error": 0.08472532639449178
+      },
+      {
+        "group": 8,
+        "hours": 743,
+        "mean_volume": 3517.0672947510093,
+        "baseline_rmse": 344.8092845942054,
+        "baseline_holiday_rmse": 321.05927812873534,
+        "champion_rmse": 287.4222931911163,
+        "reduction": 0.16643110834624408,
+        "share_of_hours": 0.08527487662114082,
+        "share_of_sq_error": 0.058371761697512854
+      },
+      {
+        "group": 9,
+        "hours": 716,
+        "mean_volume": 3455.836592178771,
+        "baseline_rmse": 474.38919488767164,
+        "baseline_holiday_rmse": 363.26768076134175,
+        "champion_rmse": 326.6300628306175,
+        "reduction": 0.31147238100994556,
+        "share_of_hours": 0.08217605876276828,
+        "share_of_sq_error": 0.07264377725345458
+      },
+      {
+        "group": 10,
+        "hours": 744,
+        "mean_volume": 3472.055107526882,
+        "baseline_rmse": 382.4745076771267,
+        "baseline_holiday_rmse": 360.17363298327734,
+        "champion_rmse": 320.4133501772477,
+        "reduction": 0.16226220638022015,
+        "share_of_hours": 0.0853896476529324,
+        "share_of_sq_error": 0.07263856035698431
+      },
+      {
+        "group": 11,
+        "hours": 716,
+        "mean_volume": 3368.4874301675977,
+        "baseline_rmse": 572.9693379021023,
+        "baseline_holiday_rmse": 391.71403271373816,
+        "champion_rmse": 417.87146287656657,
+        "reduction": 0.27069140487241194,
+        "share_of_hours": 0.08217605876276828,
+        "share_of_sq_error": 0.11889717507324896
+      },
+      {
+        "group": 12,
+        "hours": 740,
+        "mean_volume": 3125.2513513513513,
+        "baseline_rmse": 659.1922913690865,
+        "baseline_holiday_rmse": 549.2342353931342,
+        "champion_rmse": 479.2114710300179,
+        "reduction": 0.2730323498857423,
+        "share_of_hours": 0.0849305635257661,
+        "share_of_sq_error": 0.16160664612887116
+      }
+    ],
+    "by_weather": [
+      {
+        "group": "Clear or cloudy",
+        "hours": 6043,
+        "mean_volume": 3450.606321363561,
+        "baseline_rmse": 466.0325872343101,
+        "baseline_holiday_rmse": 369.8927398836426,
+        "champion_rmse": 342.46111753860055,
+        "reduction": 0.26515628537705827,
+        "share_of_hours": 0.6935613451164926,
+        "share_of_sq_error": 0.6739818793442818
+      },
+      {
+        "group": "Low visibility",
+        "hours": 803,
+        "mean_volume": 3085.1581569115815,
+        "baseline_rmse": 415.4625548038461,
+        "baseline_holiday_rmse": 341.9484838979676,
+        "champion_rmse": 317.48596259174025,
+        "reduction": 0.2358253254817727,
+        "share_of_hours": 0.09216113852863538,
+        "share_of_sq_error": 0.076972871480192
+      },
+      {
+        "group": "Rain or storm",
+        "hours": 1288,
+        "mean_volume": 3319.597049689441,
+        "baseline_rmse": 362.29955340790553,
+        "baseline_holiday_rmse": 326.9763622369725,
+        "champion_rmse": 318.88689168120806,
+        "reduction": 0.11982532497858223,
+        "share_of_hours": 0.14782508894754964,
+        "share_of_sq_error": 0.12455532076608977
+      },
+      {
+        "group": "Snow",
+        "hours": 579,
+        "mean_volume": 3135.032815198618,
+        "baseline_rmse": 610.1831340651373,
+        "baseline_holiday_rmse": 547.1323361335402,
+        "champion_rmse": 475.4898856237901,
+        "reduction": 0.22074233278786215,
+        "share_of_hours": 0.06645242740732239,
+        "share_of_sq_error": 0.12448992840943637
+      }
+    ],
+    "by_period": [
+      {
+        "group": "January to September",
+        "hours": 6513,
+        "mean_volume": 3395.1311223706434,
+        "baseline_rmse": 423.8858156419398,
+        "baseline_holiday_rmse": 350.93827336594245,
+        "champion_rmse": 323.167193134145,
+        "reduction": 0.23760790946794208,
+        "share_of_hours": 0.7475037300585332,
+        "share_of_sq_error": 0.6468576184408955
+      },
+      {
+        "group": "October to December",
+        "hours": 2200,
+        "mean_volume": 3321.6963636363635,
+        "baseline_rmse": 549.9798589582089,
+        "baseline_holiday_rmse": 441.89956295198016,
+        "champion_rmse": 410.84408326961426,
+        "reduction": 0.2529834018870263,
+        "share_of_hours": 0.2524962699414668,
+        "share_of_sq_error": 0.3531423815591044
+      }
+    ]
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "url": "http://127.0.0.1:8765",
+  "checked_utc": "2026-11-18T07:53:37Z",
+  "model_version": "hgb-a5959e97b784",
+  "first_request_ms": 24.2,
+  "checks": [
+    {
+      "check": "health (first request)",
+      "ok": true,
+      "detail": "GET /health -> 200 in 24 ms"
+    },
+    {
+      "check": "serves the exported champion",
+      "ok": true,
+      "detail": "live hgb-a5959e97b784, exported hgb-a5959e97b784"
+    },
+    {
+      "check": "serves the exported calendar-only model",
+      "ok": true,
+      "detail": "live hgb-22eddc348a3d, exported hgb-22eddc348a3d"
+    },
+    {
+      "check": "demo page loads",
+      "ok": true,
+      "detail": "GET / -> 200"
+    },
+    {
+      "check": "API documentation loads",
+      "ok": true,
+      "detail": "GET /docs -> 200"
+    },
+    {
+      "check": "model card",
+      "ok": true,
+      "detail": "test metrics and quiet holidays match the export"
+    },
+    {
+      "check": "prediction from a time alone",
+      "ok": true,
+      "detail": "2026-11-19T08:00 -> 5731 vehicles, calendar only"
+    },
+    {
+      "check": "prediction with weather uses the weather model",
+      "ok": true,
+      "detail": "5801 vehicles, calendar and weather"
+    },
+    {
+      "check": "a quiet holiday is recognised from the date",
+      "ok": true,
+      "detail": "Thanksgiving 08:00 -> 1438 vehicles against 5731 on an ordinary Thursday"
+    },
+    {
+      "check": "a named day that is not quiet stays an ordinary day",
+      "ok": true,
+      "detail": "Veterans Day 08:00 -> 5717 vehicles"
+    },
+    {
+      "check": "whole-day forecast",
+      "ok": true,
+      "detail": "peak 6343 at 16:00"
+    },
+    {
+      "check": "batch of 100 real hours agrees with the exported champion",
+      "ok": true,
+      "detail": "largest difference 0.0015 vehicles per hour (limit 0.01)"
+    },
+    {
+      "check": "batch of 100 real hours agrees with the exported calendar-only model",
+      "ok": true,
+      "detail": "largest difference 0.0014 vehicles per hour (limit 0.01)"
+    },
+    {
+      "check": "feedback accepted and matched",
+      "ok": true,
+      "detail": "error reported back: 50"
+    },
+    {
+      "check": "feedback summary",
+      "ok": true,
+      "detail": "505 report(s); MAE 188.3"
+    },
+    {
+      "check": "metrics",
+      "ok": true,
+      "detail": "1480 requests, p95 6.86 ms"
+    },
+    {
+      "check": "bad input: malformed JSON",
+      "ok": true,
+      "detail": "422: The request was not understood. request body: it is not valid JSON. See /docs for the expected fields."
+    },
+    {
+      "check": "bad input: empty body",
+      "ok": true,
+      "detail": "422: The request was not understood. request body: send a JSON object with Content-Type: application/json. See /doc"
+    },
+    {
+      "check": "bad input: plain text instead of JSON",
+      "ok": true,
+      "detail": "422: The request was not understood. request body: send a JSON object with Content-Type: application/json. See /doc"
+    },
+    {
+      "check": "bad input: no time",
+      "ok": true,
+      "detail": "422: The request was not understood. datetime: Field required. See /docs for the expected fields."
+    },
+    {
+      "check": "bad input: an impossible date",
+      "ok": true,
+      "detail": "422: The request was not understood. datetime: Input should be a valid datetime or date, day value is outside expec"
+    },
+    {
+      "check": "bad input: words where a time belongs",
+      "ok": true,
+      "detail": "422: The request was not understood. datetime: Input should be a valid datetime or date, input is too short. See /d"
+    },
+    {
+      "check": "bad input: an unknown field",
+      "ok": true,
+      "detail": "422: The request was not understood. speed: Extra inputs are not permitted. See /docs for the expected fields."
+    },
+    {
+      "check": "bad input: weather outside 'weather'",
+      "ok": true,
+      "detail": "422: The request was not understood. temp_c: Extra inputs are not permitted. See /docs for the expected fields."
+    },
+    {
+      "check": "bad input: an impossible temperature",
+      "ok": true,
+      "detail": "422: The request was not understood. weather.temp_c: Input should be less than or equal to 45. See /docs for the ex"
+    },
+    {
+      "check": "bad input: an unknown kind of weather",
+      "ok": true,
+      "detail": "422: The request was not understood. weather.weather_main: Input should be 'Clear', 'Clouds', 'Rain', 'Drizzle', 'S"
+    },
+    {
+      "check": "bad input: incomplete weather",
+      "ok": true,
+      "detail": "422: The request was not understood. weather.weather_main: Field required; weather.clouds_all: Field required. See "
+    },
+    {
+      "check": "bad input: batch of 169 hours",
+      "ok": true,
+      "detail": "422"
+    },
+    {
+      "check": "bad input: negative count in feedback",
+      "ok": true,
+      "detail": "422"
+    },
+    {
+      "check": "unknown address",
+      "ok": true,
+      "detail": "404"
+    },
+    {
+      "check": "wrong method",
+      "ok": true,
+      "detail": "405"
+    },
+    {
+      "check": "still healthy after the bad requests",
+      "ok": true,
+      "detail": "200"
+    }
+  ],
+  "passed": 32,
+  "failed": 0
+}

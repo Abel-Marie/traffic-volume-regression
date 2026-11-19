@@ -1,0 +1,168 @@
+{
+  "permutation": [
+    {
+      "feature": "hour_cos",
+      "rmse_increase": 1645.6467538585123,
+      "std": 10.523879139058538
+    },
+    {
+      "feature": "hour_slot",
+      "rmse_increase": 845.0878781745148,
+      "std": 9.955483682062756
+    },
+    {
+      "feature": "hour",
+      "rmse_increase": 320.3975268446884,
+      "std": 2.6459633861776295
+    },
+    {
+      "feature": "hour_sin",
+      "rmse_increase": 304.2892302344388,
+      "std": 1.9764488204714927
+    },
+    {
+      "feature": "is_holiday",
+      "rmse_increase": 140.77147870108809,
+      "std": 10.805851476470293
+    },
+    {
+      "feature": "weekday",
+      "rmse_increase": 140.51155436658865,
+      "std": 1.5131888205827364
+    },
+    {
+      "feature": "rush_hour",
+      "rmse_increase": 35.81544800444745,
+      "std": 0.7833100671848429
+    },
+    {
+      "feature": "temp_c",
+      "rmse_increase": 16.4832729288437,
+      "std": 0.9648453109959803
+    },
+    {
+      "feature": "month",
+      "rmse_increase": 6.685730069276974,
+      "std": 0.3837303579583981
+    },
+    {
+      "feature": "month_cos",
+      "rmse_increase": 5.233804525306221,
+      "std": 0.43746288105042447
+    },
+    {
+      "feature": "month_sin",
+      "rmse_increase": 4.895565012983491,
+      "std": 0.29019263091238745
+    },
+    {
+      "feature": "weather_group",
+      "rmse_increase": 3.2997985264272187,
+      "std": 0.3112697325073821
+    },
+    {
+      "feature": "clouds_all",
+      "rmse_increase": 1.0608521436276988,
+      "std": 0.507346859954527
+    },
+    {
+      "feature": "is_snowing",
+      "rmse_increase": 0.2014102718859249,
+      "std": 0.045946711875650935
+    },
+    {
+      "feature": "is_raining",
+      "rmse_increase": 0.1202356623884043,
+      "std": 0.028267597485332422
+    },
+    {
+      "feature": "is_weekend",
+      "rmse_increase": 0.0,
+      "std": 0.0
+    },
+    {
+      "feature": "rain_1h",
+      "rmse_increase": 0.0,
+      "std": 0.0
+    },
+    {
+      "feature": "snow_1h",
+      "rmse_increase": 0.0,
+      "std": 0.0
+    }
+  ],
+  "shap": [
+    {
+      "feature": "hour_cos",
+      "mean_abs_shap": 1328.6307342167365
+    },
+    {
+      "feature": "hour_slot",
+      "mean_abs_shap": 445.24172009721923
+    },
+    {
+      "feature": "hour_sin",
+      "mean_abs_shap": 263.10723272717905
+    },
+    {
+      "feature": "hour",
+      "mean_abs_shap": 261.1478877232008
+    },
+    {
+      "feature": "weekday",
+      "mean_abs_shap": 127.55842718922005
+    },
+    {
+      "feature": "rush_hour",
+      "mean_abs_shap": 61.589381351953776
+    },
+    {
+      "feature": "temp_c",
+      "mean_abs_shap": 48.770736424799075
+    },
+    {
+      "feature": "month_sin",
+      "mean_abs_shap": 46.39785621584218
+    },
+    {
+      "feature": "is_holiday",
+      "mean_abs_shap": 45.75796396398521
+    },
+    {
+      "feature": "month_cos",
+      "mean_abs_shap": 32.84569248055369
+    },
+    {
+      "feature": "month",
+      "mean_abs_shap": 15.146336895259894
+    },
+    {
+      "feature": "clouds_all",
+      "mean_abs_shap": 14.904965649271999
+    },
+    {
+      "feature": "weather_group",
+      "mean_abs_shap": 13.631474902270362
+    },
+    {
+      "feature": "rain_1h",
+      "mean_abs_shap": 5.274884226545571
+    },
+    {
+      "feature": "is_snowing",
+      "mean_abs_shap": 0.7819044662503363
+    },
+    {
+      "feature": "snow_1h",
+      "mean_abs_shap": 0.4162822975640337
+    },
+    {
+      "feature": "is_raining",
+      "mean_abs_shap": 0.37786963179978206
+    },
+    {
+      "feature": "is_weekend",
+      "mean_abs_shap": 0.0
+    }
+  ]
+}

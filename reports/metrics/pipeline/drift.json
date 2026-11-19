@@ -1,0 +1,146 @@
+[
+  {
+    "feature": "clouds_all",
+    "type": "numeric",
+    "psi": 0.21778042172047046,
+    "ks_statistic": 0.06395453617516435,
+    "ks_pvalue": 1.7557012961794804e-23,
+    "level": "moderate"
+  },
+  {
+    "feature": "temp_c",
+    "type": "numeric",
+    "psi": 0.03202864409417274,
+    "ks_statistic": 0.04530106904910837,
+    "ks_pvalue": 5.422102292379749e-12,
+    "level": "stable"
+  },
+  {
+    "feature": "month_sin",
+    "type": "numeric",
+    "psi": 0.02033741628409201,
+    "ks_statistic": 0.03333977671493782,
+    "ks_pvalue": 1.0833018097336847e-06,
+    "level": "stable"
+  },
+  {
+    "feature": "weather_group",
+    "type": "categorical",
+    "psi": 0.019242960916586865,
+    "ks_statistic": null,
+    "ks_pvalue": null,
+    "level": "stable"
+  },
+  {
+    "feature": "month",
+    "type": "numeric",
+    "psi": 0.01872250999479829,
+    "ks_statistic": 0.04888928508328638,
+    "ks_pvalue": 6.750331769803196e-14,
+    "level": "stable"
+  },
+  {
+    "feature": "month_cos",
+    "type": "numeric",
+    "psi": 0.01348524667781257,
+    "ks_statistic": 0.02711970179005388,
+    "ks_pvalue": 0.0001424535423147142,
+    "level": "stable"
+  },
+  {
+    "feature": "hour_slot",
+    "type": "categorical",
+    "psi": 0.000615119748436969,
+    "ks_statistic": null,
+    "ks_pvalue": null,
+    "level": "stable"
+  },
+  {
+    "feature": "hour_cos",
+    "type": "numeric",
+    "psi": 0.00024348001497330346,
+    "ks_statistic": 0.005903260191233439,
+    "ks_pvalue": 0.976682283382556,
+    "level": "stable"
+  },
+  {
+    "feature": "weekday",
+    "type": "numeric",
+    "psi": 0.00018552065011530317,
+    "ks_statistic": 0.004271138188209789,
+    "ks_pvalue": 0.9997598851647406,
+    "level": "stable"
+  },
+  {
+    "feature": "hour",
+    "type": "numeric",
+    "psi": 0.00017190751182780928,
+    "ks_statistic": 0.0036317638113168016,
+    "ks_pvalue": 0.9999944173758356,
+    "level": "stable"
+  },
+  {
+    "feature": "hour_sin",
+    "type": "numeric",
+    "psi": 9.357507571160272e-05,
+    "ks_statistic": 0.00237219351856488,
+    "ks_pvalue": 0.999999999999947,
+    "level": "stable"
+  },
+  {
+    "feature": "rush_hour",
+    "type": "numeric",
+    "psi": 0.0,
+    "ks_statistic": 0.0013777156074107344,
+    "ks_pvalue": 1.0,
+    "level": "stable"
+  },
+  {
+    "feature": "is_weekend",
+    "type": "numeric",
+    "psi": 0.0,
+    "ks_statistic": 0.004271138188209789,
+    "ks_pvalue": 0.9997598851647406,
+    "level": "stable"
+  },
+  {
+    "feature": "is_holiday",
+    "type": "numeric",
+    "psi": 0.0,
+    "ks_statistic": 0.0019519204565177084,
+    "ks_pvalue": 1.0,
+    "level": "stable"
+  },
+  {
+    "feature": "is_raining",
+    "type": "numeric",
+    "psi": 0.0,
+    "ks_statistic": 0.007116003794019998,
+    "ks_pvalue": 0.8957470325695853,
+    "level": "stable"
+  },
+  {
+    "feature": "rain_1h",
+    "type": "numeric",
+    "psi": 0.0,
+    "ks_statistic": 0.0651313706869262,
+    "ks_pvalue": 2.4414475939281853e-24,
+    "level": "stable"
+  },
+  {
+    "feature": "is_snowing",
+    "type": "numeric",
+    "psi": 0.0,
+    "ks_statistic": 0.00045957006023067404,
+    "ks_pvalue": 1.0,
+    "level": "stable"
+  },
+  {
+    "feature": "snow_1h",
+    "type": "numeric",
+    "psi": 0.0,
+    "ks_statistic": 0.001226654004431782,
+    "ks_pvalue": 1.0,
+    "level": "stable"
+  }
+]

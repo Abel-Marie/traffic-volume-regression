@@ -1,0 +1,79 @@
+[
+  {
+    "holiday": "New Years Day",
+    "days": 3,
+    "share_of_normal": 0.4727777220929324,
+    "lowest": 0.4505860439036987,
+    "highest": 0.5039211177440964
+  },
+  {
+    "holiday": "Christmas Day",
+    "days": 4,
+    "share_of_normal": 0.49159433174784506,
+    "lowest": 0.40892177711419353,
+    "highest": 0.6309413434359343
+  },
+  {
+    "holiday": "Thanksgiving Day",
+    "days": 4,
+    "share_of_normal": 0.5457702224087218,
+    "lowest": 0.5318916990117581,
+    "highest": 0.5653271289258773
+  },
+  {
+    "holiday": "Independence Day",
+    "days": 4,
+    "share_of_normal": 0.6124619693230622,
+    "lowest": 0.5680930525230998,
+    "highest": 0.7281953309673381
+  },
+  {
+    "holiday": "Memorial Day",
+    "days": 3,
+    "share_of_normal": 0.6142690014695292,
+    "lowest": 0.5745312294969359,
+    "highest": 0.6555171089783849
+  },
+  {
+    "holiday": "Labor Day",
+    "days": 3,
+    "share_of_normal": 0.6768829060141659,
+    "lowest": 0.628446397727737,
+    "highest": 0.7098668210830551
+  },
+  {
+    "holiday": "Martin Luther King Jr Day",
+    "days": 3,
+    "share_of_normal": 0.7985964946817457,
+    "lowest": 0.7781995406822472,
+    "highest": 0.8150601084014116
+  },
+  {
+    "holiday": "Washingtons Birthday",
+    "days": 3,
+    "share_of_normal": 0.8556634632401536,
+    "lowest": 0.7220129470185719,
+    "highest": 0.9345169866797677
+  },
+  {
+    "holiday": "Veterans Day",
+    "days": 4,
+    "share_of_normal": 0.9141606029814665,
+    "lowest": 0.8499975766156609,
+    "highest": 0.9528052811820155
+  },
+  {
+    "holiday": "Columbus Day",
+    "days": 4,
+    "share_of_normal": 0.9923942603205069,
+    "lowest": 0.9617841355452996,
+    "highest": 1.0371798538677437
+  },
+  {
+    "holiday": "State Fair",
+    "days": 3,
+    "share_of_normal": 1.0281606173112803,
+    "lowest": 0.9841207012846458,
+    "highest": 1.0531322108720091
+  }
+]
