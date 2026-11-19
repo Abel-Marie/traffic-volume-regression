@@ -1,0 +1,293 @@
+{
+  "model_version": "hgb-a5959e97b784",
+  "file": "model.onnx",
+  "inputs": "calendar and weather",
+  "input_variables": [
+    "hour",
+    "weekday",
+    "month",
+    "is_holiday",
+    "temp",
+    "rain_1h",
+    "snow_1h",
+    "clouds_all",
+    "weather_main"
+  ],
+  "feature_sources": [
+    "calendar",
+    "holiday",
+    "weather"
+  ],
+  "input_order": [
+    "hour_slot",
+    "weather_group",
+    "hour",
+    "hour_sin",
+    "hour_cos",
+    "weekday",
+    "is_weekend",
+    "rush_hour",
+    "month",
+    "month_sin",
+    "month_cos",
+    "is_holiday",
+    "temp_c",
+    "rain_1h",
+    "is_raining",
+    "snow_1h",
+    "is_snowing",
+    "clouds_all"
+  ],
+  "categorical_features": [
+    "hour_slot",
+    "weather_group"
+  ],
+  "numeric_features": [
+    "hour",
+    "hour_sin",
+    "hour_cos",
+    "weekday",
+    "is_weekend",
+    "rush_hour",
+    "month",
+    "month_sin",
+    "month_cos",
+    "is_holiday",
+    "temp_c",
+    "rain_1h",
+    "is_raining",
+    "snow_1h",
+    "is_snowing",
+    "clouds_all"
+  ],
+  "unknown_category_code": -1.0,
+  "category_codes": {
+    "hour_slot": {
+      "weekday-00": 0.0,
+      "weekday-01": 1.0,
+      "weekday-02": 2.0,
+      "weekday-03": 3.0,
+      "weekday-04": 4.0,
+      "weekday-05": 5.0,
+      "weekday-06": 6.0,
+      "weekday-07": 7.0,
+      "weekday-08": 8.0,
+      "weekday-09": 9.0,
+      "weekday-10": 10.0,
+      "weekday-11": 11.0,
+      "weekday-12": 12.0,
+      "weekday-13": 13.0,
+      "weekday-14": 14.0,
+      "weekday-15": 15.0,
+      "weekday-16": 16.0,
+      "weekday-17": 17.0,
+      "weekday-18": 18.0,
+      "weekday-19": 19.0,
+      "weekday-20": 20.0,
+      "weekday-21": 21.0,
+      "weekday-22": 22.0,
+      "weekday-23": 23.0,
+      "weekend-00": 24.0,
+      "weekend-01": 25.0,
+      "weekend-02": 26.0,
+      "weekend-03": 27.0,
+      "weekend-04": 28.0,
+      "weekend-05": 29.0,
+      "weekend-06": 30.0,
+      "weekend-07": 31.0,
+      "weekend-08": 32.0,
+      "weekend-09": 33.0,
+      "weekend-10": 34.0,
+      "weekend-11": 35.0,
+      "weekend-12": 36.0,
+      "weekend-13": 37.0,
+      "weekend-14": 38.0,
+      "weekend-15": 39.0,
+      "weekend-16": 40.0,
+      "weekend-17": 41.0,
+      "weekend-18": 42.0,
+      "weekend-19": 43.0,
+      "weekend-20": 44.0,
+      "weekend-21": 45.0,
+      "weekend-22": 46.0,
+      "weekend-23": 47.0
+    },
+    "weather_group": {
+      "Clear": 0.0,
+      "Clouds": 1.0,
+      "Low visibility": 2.0,
+      "Rain": 3.0,
+      "Snow": 4.0,
+      "Storm": 5.0
+    }
+  },
+  "test_metrics": {
+    "mse": 135400.4135960844,
+    "rmse": 367.9679518600559,
+    "mae": 220.67894894236625,
+    "r2": 0.9652679834664836
+  },
+  "validation_metrics": {
+    "mse": 120686.64074216431,
+    "rmse": 347.39982835655564,
+    "mae": 228.13905423261792,
+    "r2": 0.9692924075060222
+  },
+  "test_reference": {
+    "hour_of_week_average": {
+      "mse": 219007.91180420626,
+      "rmse": 467.9828114409826,
+      "mae": 264.56790811592805,
+      "r2": 0.9438215422558017
+    },
+    "hour_of_week_average_with_holidays": {
+      "mse": 156445.75199452322,
+      "rmse": 395.5322388813878,
+      "mae": 237.48114384885156,
+      "r2": 0.9598695727689466
+    }
+  },
+  "test_year_evaluations": 2,
+  "first_evaluation": {
+    "date": "2026-11-11",
+    "champion": "rf",
+    "model_kb": 12304.3,
+    "validation_rmse": 375.56,
+    "test_r2": 0.9637,
+    "test_rmse": 375.97,
+    "test_mae": 223.15,
+    "baseline_test_rmse": 468.24,
+    "baseline_test_r2": 0.9438
+  },
+  "trained_utc": "2026-11-18T07:37:49Z",
+  "task": "regression: westbound I-94 vehicles per hour at ATR station 301 (Minneapolis-St Paul)",
+  "estimator": "hgb",
+  "params": {
+    "l2_regularization": 2.9154431891537547,
+    "learning_rate": 0.10185822566867639,
+    "max_iter": 201,
+    "max_leaf_nodes": 10,
+    "min_samples_leaf": 31
+  },
+  "trained_on": "hours up to 2017 (training and validation years)",
+  "quiet_holidays": [
+    "New Years Day",
+    "Memorial Day",
+    "Independence Day",
+    "Labor Day",
+    "Thanksgiving Day",
+    "Christmas Day"
+  ],
+  "inputs_note": "is_holiday means a quiet holiday (see quiet_holidays). Weather values are those of the hour being predicted: observed in the training data, a forecast when planning ahead. Without weather, the calendar-only model answers.",
+  "not_used": [
+    "year (trees cannot extrapolate to unseen years)",
+    "recent traffic counts: not known when planning days or weeks ahead"
+  ],
+  "data": {
+    "name": "Metro Interstate Traffic Volume",
+    "citation": "Hogue, J. (2019). Metro Interstate Traffic Volume [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5X60B",
+    "license": "CC BY 4.0"
+  },
+  "fallback": {
+    "model_version": "hgb-22eddc348a3d",
+    "file": "model_calendar.onnx",
+    "inputs": "calendar only",
+    "input_variables": [
+      "hour",
+      "weekday",
+      "month",
+      "is_holiday"
+    ],
+    "feature_sources": [
+      "calendar",
+      "holiday"
+    ],
+    "input_order": [
+      "hour_slot",
+      "hour",
+      "hour_sin",
+      "hour_cos",
+      "weekday",
+      "is_weekend",
+      "rush_hour",
+      "month",
+      "month_sin",
+      "month_cos",
+      "is_holiday"
+    ],
+    "categorical_features": [
+      "hour_slot"
+    ],
+    "numeric_features": [
+      "hour",
+      "hour_sin",
+      "hour_cos",
+      "weekday",
+      "is_weekend",
+      "rush_hour",
+      "month",
+      "month_sin",
+      "month_cos",
+      "is_holiday"
+    ],
+    "unknown_category_code": -1.0,
+    "category_codes": {
+      "hour_slot": {
+        "weekday-00": 0.0,
+        "weekday-01": 1.0,
+        "weekday-02": 2.0,
+        "weekday-03": 3.0,
+        "weekday-04": 4.0,
+        "weekday-05": 5.0,
+        "weekday-06": 6.0,
+        "weekday-07": 7.0,
+        "weekday-08": 8.0,
+        "weekday-09": 9.0,
+        "weekday-10": 10.0,
+        "weekday-11": 11.0,
+        "weekday-12": 12.0,
+        "weekday-13": 13.0,
+        "weekday-14": 14.0,
+        "weekday-15": 15.0,
+        "weekday-16": 16.0,
+        "weekday-17": 17.0,
+        "weekday-18": 18.0,
+        "weekday-19": 19.0,
+        "weekday-20": 20.0,
+        "weekday-21": 21.0,
+        "weekday-22": 22.0,
+        "weekday-23": 23.0,
+        "weekend-00": 24.0,
+        "weekend-01": 25.0,
+        "weekend-02": 26.0,
+        "weekend-03": 27.0,
+        "weekend-04": 28.0,
+        "weekend-05": 29.0,
+        "weekend-06": 30.0,
+        "weekend-07": 31.0,
+        "weekend-08": 32.0,
+        "weekend-09": 33.0,
+        "weekend-10": 34.0,
+        "weekend-11": 35.0,
+        "weekend-12": 36.0,
+        "weekend-13": 37.0,
+        "weekend-14": 38.0,
+        "weekend-15": 39.0,
+        "weekend-16": 40.0,
+        "weekend-17": 41.0,
+        "weekend-18": 42.0,
+        "weekend-19": 43.0,
+        "weekend-20": 44.0,
+        "weekend-21": 45.0,
+        "weekend-22": 46.0,
+        "weekend-23": 47.0
+      }
+    },
+    "test_metrics": {
+      "mse": 142459.06308309422,
+      "rmse": 377.4374955977403,
+      "mae": 223.380425631345,
+      "r2": 0.9634573454914884
+    }
+  }
+}
