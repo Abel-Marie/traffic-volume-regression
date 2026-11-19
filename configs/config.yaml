@@ -1,0 +1,130 @@
+# Every tunable setting for the project lives here. Code reads it through
+# traffic_volume.config.load_config(); nothing below is repeated in code.
+
+project: traffic-volume-regression
+seed: 42
+
+data:
+  name: Metro Interstate Traffic Volume
+  citation: >-
+    Hogue, J. (2019). Metro Interstate Traffic Volume [Dataset]. UCI Machine Learning Repository.
+    https://doi.org/10.24432/C5X60B
+  license: CC BY 4.0
+  # Tried in order; every source must give the same bytes (the checksum below is verified each time).
+  sources:
+    - https://archive.ics.uci.edu/static/public/492/metro+interstate+traffic+volume.zip
+    - https://cdn.jsdelivr.net/gh/ikoghoemmanuell/Finding-Heavy-Traffic-Indicators-on-I-94@4944f27bcb8c4da7e0e7fae997ab450b72a525e9/Metro_Interstate_Traffic_Volume.csv
+    - https://raw.githubusercontent.com/ikoghoemmanuell/Finding-Heavy-Traffic-Indicators-on-I-94/4944f27bcb8c4da7e0e7fae997ab450b72a525e9/Metro_Interstate_Traffic_Volume.csv
+  download_deadline_seconds: 90    # per source, for the whole download (a slow link cannot hang the run)
+  mirror_path: data/mirror/traffic.csv.gz
+  sha256: 749c90d720360a4215bb15345526073c079ba4cc95e3fa558796d083f85fce9e   # of the CSV
+  expected_rows: 48204
+  expected_columns: 9
+
+target: traffic_volume
+
+cleaning:
+  min_valid_temp_kelvin: 200.0     # 0 K readings are sensor errors
+  max_valid_rain_mm: 100.0         # one reading of 9,831 mm in an hour is a sensor error
+  # Fewer vehicles than this in an hour means the road was closed or the counter was down: the quietest
+  # regular hour of the week averages about 280 vehicles. Such hours occur only in 2015 and 2016.
+  min_plausible_volume: 100
+  # The source marks eleven named days. Only on these six does traffic fall well below a normal day
+  # (47 to 68% of normal in the training years); the other five are ordinary commuting days (82 to 103%)
+  # and are treated as such. The evidence table is produced from the training years in the notebook.
+  quiet_holidays: [New Years Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, Christmas Day]
+  # When one hour has several weather rows, keep the most severe condition (first in this list).
+  weather_severity: [Thunderstorm, Squall, Snow, Rain, Drizzle, Fog, Mist, Haze, Smoke, Clouds, Clear]
+
+split:
+  train_until_year: 2016           # train: up to 2016
+  validation_year: 2017            # validation: 2017
+  test_year: 2018                  # test: 2018 (January to September)
+
+features:
+  min_category_frequency: 20
+  sources: [calendar, holiday, weather]
+  # Which raw variables each feature uses is declared in rowlevel.py (FEATURE_INPUTS).
+
+models:
+  n_jobs: 4
+
+tuning:
+  cv_folds: 3                      # TimeSeriesSplit on the training years
+  ridge_grid:
+    alpha: [0.1, 1.0, 10.0, 100.0]
+  rf_random_iterations: 10
+  hgb_random_iterations: 16
+  # Same budget for all three strategies on LightGBM, so they can be compared fairly.
+  lgbm_budget: 16
+  lgbm_grid:
+    num_leaves: [31, 127]
+    learning_rate: [0.03, 0.1]
+    n_estimators: [200, 400, 700, 1000]
+
+diagnostics:
+  # Share of the training hours used, counted back from the end of 2016 (most recent first).
+  learning_curve_sizes: [0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
+  # Capacity setting swept for the complexity curve, by champion family.
+  complexity_curve:
+    hgb: {param: max_leaf_nodes, values: [2, 3, 4, 6, 8, 16, 31, 64, 128]}
+    rf: {param: max_depth, values: [2, 4, 6, 8, 10, 12, 16, 24]}
+    lgbm: {param: num_leaves, values: [2, 4, 8, 16, 32, 64, 128, 256]}
+
+evaluation:
+  bootstrap_samples: 1000          # block bootstrap over whole days
+
+explain:
+  permutation_repeats: 5
+  shap_rows: 2000
+
+feature_study:
+  univariate_families: [linear, spline, tree]
+  contrast_variable: temp          # the main raw weather variable, for contrast with the engineered one
+
+success:
+  r2: 0.90
+  beat_baseline_rmse: true
+
+selection:
+  tie_tolerance_rmse: 5.0          # vehicles per hour; smaller differences are treated as ties
+
+# Models scored on the test set, fixed before the test pass.
+#   baseline          mean of the same hour and weekday
+#   baseline_holiday  the same lookup table with quiet holidays as an eighth day type
+#   ridge             tuned linear model
+#   univariate, bivariate   the champion's family on the top one and top two variables (Section 6b)
+#   alternative_inputs  the champion's family and settings on the other input set: with the weather if
+#                       the champion uses the calendar only, without it otherwise
+#   champion          the selected model
+test_pass_models: [baseline, baseline_holiday, ridge, univariate, bivariate, alternative_inputs, champion]
+
+# The 2018 test year has been scored twice. The first evaluation (11 November 2026) is kept here for the
+# record; the full file is reports/metrics/first_evaluation.json. A review then found four defects and
+# fixed them using training and validation data only: the holiday flag (cleaning.quiet_holidays), three
+# holidays the source never flagged, road-closure hours (cleaning.min_plausible_volume) and a model family
+# missing from the tuned pool (tuning.hgb_random_iterations). The second evaluation is the reported one.
+first_evaluation:
+  date: "2026-11-11"
+  champion: rf
+  model_kb: 12304.3
+  validation_rmse: 375.56
+  test_r2: 0.9637
+  test_rmse: 375.97
+  test_mae: 223.15
+  baseline_test_rmse: 468.24
+  baseline_test_r2: 0.9438
+
+service:
+  # Base URL of the deployed API. The notebooks call it in Sections 8.3 and 10; the SERVICE_URL
+  # environment variable overrides it. Empty means not deployed yet.
+  url: ""
+
+fast:   # ML_FAST=1 or --fast: tiny budgets for tests and CI; never used for reported results
+  cv_folds: 2
+  rf_random_iterations: 2
+  hgb_random_iterations: 2
+  lgbm_budget: 4
+  bootstrap_samples: 50
+  permutation_repeats: 2
+  shap_rows: 200
