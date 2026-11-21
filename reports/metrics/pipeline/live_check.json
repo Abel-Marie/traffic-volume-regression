@@ -1,13 +1,13 @@
 {
-  "url": "http://127.0.0.1:8765",
-  "checked_utc": "2026-11-18T07:53:37Z",
+  "url": "https://traffic-volume-i94.vercel.app",
+  "checked_utc": "2026-11-21T20:41:39Z",
   "model_version": "hgb-a5959e97b784",
-  "first_request_ms": 24.2,
+  "first_request_ms": 3189.6,
   "checks": [
     {
       "check": "health (first request)",
       "ok": true,
-      "detail": "GET /health -> 200 in 24 ms"
+      "detail": "GET /health -> 200 in 3190 ms"
     },
     {
       "check": "serves the exported champion",
@@ -77,12 +77,12 @@
     {
       "check": "feedback summary",
       "ok": true,
-      "detail": "505 report(s); MAE 188.3"
+      "detail": "1 report(s); MAE 50.0"
     },
     {
       "check": "metrics",
       "ok": true,
-      "detail": "1480 requests, p95 6.86 ms"
+      "detail": "12 requests, p95 7.21 ms"
     },
     {
       "check": "bad input: malformed JSON",

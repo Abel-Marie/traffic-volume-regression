@@ -118,7 +118,7 @@ first_evaluation:
 service:
   # Base URL of the deployed API. The notebooks call it in Sections 8.3 and 10; the SERVICE_URL
   # environment variable overrides it. Empty means not deployed yet.
-  url: ""
+  url: "https://traffic-volume-i94.vercel.app"
 
 fast:   # ML_FAST=1 or --fast: tiny budgets for tests and CI; never used for reported results
   cv_folds: 2
