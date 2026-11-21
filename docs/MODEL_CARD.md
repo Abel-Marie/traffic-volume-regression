@@ -5,7 +5,7 @@
 | Models | `hgb-a5959e97b784` (calendar and weather) and `hgb-22eddc348a3d` (calendar only) |
 | Estimator | HistGradientBoosting; settings: `l2_regularization` = 2.9154, `learning_rate` = 0.1019, `max_iter` = 201, `max_leaf_nodes` = 10, `min_samples_leaf` = 31 |
 | Format | ONNX, 139 KB each |
-| Endpoint | not deployed yet |
+| Endpoint | https://traffic-volume-i94.vercel.app |
 | Trained on | Hours from 2012-10-02 to the end of 2017 |
 
 ## Intended use
@@ -69,7 +69,6 @@ validation data only, and the figures above are the second evaluation. See `docs
 | Weekend | 1,862 | 453 | 453 | 438 | +3% | 40% |
 | Quiet holiday | 96 | 2,072 | 405 | 352 | +83% | 1% |
 
-
 ### By weather (test year)
 
 | Weather | Hours | Baseline RMSE | Calendar-only model | Champion RMSE | Share of champion's squared error |
@@ -78,7 +77,6 @@ validation data only, and the figures above are the second evaluation. See `docs
 | Low visibility | 604 | 271 | 234 | 230 | 4% |
 | Rain or storm | 1,089 | 438 | 264 | 265 | 9% |
 | Snow | 516 | 917 | 926 | 875 | 45% |
-
 
 ## Limitations and risks
 

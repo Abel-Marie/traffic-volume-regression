@@ -6,9 +6,9 @@ messy hourly series, feature engineering, a chronological split, algorithm selec
 hyperparameter-search strategies, **feature importance with univariate, bivariate and multivariate models**,
 a final test, ONNX export, a FastAPI service and monitoring.
 
-Machine Learning Assignment 1, regression problem. 
+Machine Learning Assignment 1, regression problem. Abel Mari Shiferaw (student ID GSR/1670/19), Machine Learning, instructor: Dr Fantahun Bogale Gereme, Addis Ababa University, College of Technology and Built Environment.
 
-**Live demo and API:** _not deployed yet: see Deployment below_
+**Live demo and API:** [https://traffic-volume-i94.vercel.app](https://traffic-volume-i94.vercel.app)
 
 ## Results
 
@@ -80,8 +80,8 @@ traffic-volume feature-study        # or any single stage
 traffic-volume all --fast           # smoke run; writes to build/fast/, never over the results
 ```
 
-Stages: `download → validate → clean → split → eda → train → tune → select → diagnose → explain →
-feature-study → evaluate → export → report`.
+Stages, in order: `download`, `validate`, `clean`, `split`, `eda`, `train`, `tune`, `select`, `diagnose`,
+`explain`, `feature-study`, `evaluate`, `export`, `report`.
 
 **Everything from a fresh clone:**
 
@@ -124,18 +124,18 @@ Without weather the calendar-only model answers (test RMSE 377); with it, the ch
 
 ### Deployment (Vercel)
 
-**The service has not been deployed to the cloud yet.** It is built, tested and packaged for Vercel; the measurements below come from a copy running on the author's computer. Deploying it is one command.
+The service is deployed at https://traffic-volume-i94.vercel.app.
 
 ```bash
 cd service
 npx vercel login          # once
 npx vercel --prod         # deploys this folder; note the address it prints
 cd ..
-python scripts/check_live.py https://<your-app>.vercel.app   # outside-in check of the live service
+python scripts/check_live.py https://traffic-volume-i94.vercel.app   # outside-in check of the live service
 ```
 
-Measured locally:
-median 17 ms, 95th percentile 33 ms, first request 64 ms (local copy).
+Measured against the live service, from the author's computer:
+median 514 ms, 95th percentile 1211 ms, first request 567 ms (live).
 
 ## Tests and checks
 

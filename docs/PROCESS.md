@@ -2,7 +2,11 @@
 
 **Process documentation. Machine Learning Assignment 1 (the ML process): regression problem.**
 
-
+Abel Mari Shiferaw  
+Student ID: GSR/1670/19  
+Course: Machine Learning  
+Instructor: Dr Fantahun Bogale Gereme  
+Addis Ababa University, College of Technology and Built Environment
 
 **What this document is.** A step-by-step account of how the model was built, following the structure and
 numbering of the assignment sheet (steps 1 to 6, 8, 10 and 11). For each step it says what was done, why,
@@ -39,7 +43,7 @@ it gets most wrong are snow hours.
 | Model against a holiday-aware lookup table | RMSE 7% lower (4% to 10%) |
 | Without any weather input (calendar-only model) | Test RMSE 377, R² 0.963 |
 | Success criteria set in step 1 | R² of at least 0.9: met, but the baseline meets it too. Beat the baseline: met |
-| Deployment | not deployed yet. FastAPI service, two ONNX models of 139 KB each |
+| Deployment | https://traffic-volume-i94.vercel.app. FastAPI service, two ONNX models of 139 KB each |
 | Test year scored | Twice. First evaluation: R² 0.964, RMSE 376. See section 8.1 |
 
 ### Five findings
@@ -200,7 +204,6 @@ traffic: the road was closed or the counter was down. They cluster on a few days
 | 2017 | 2,017 | 0 | 579 | 0 |
 | 2018 | 1,538 | 524 | 521 | 0 |
 
-
 ![Share of rainy and snowy records that carry an amount, by year.](../reports/figures/eda_precipitation_audit.png)
 
 ### 3.2 Data cleaning
@@ -231,7 +234,6 @@ The cleaning log, as the code records it:
 | one row per hour | 48,116 | 40,518 | 7,598 rows removed | Hours with several weather rows repeat the same volume; keep one row, with the most severe weather. |
 | treat only quiet holidays as holidays | 40,518 | 40,518 | 550 values changed | Named days on which traffic stays near normal (Columbus Day, Veterans Day and others) are ordinary days for the model; only the quiet holidays listed in the configuration count. |
 
-
 After cleaning there are **40,518 hours**, each appearing once, with no missing
 value in any column.
 
@@ -252,7 +254,6 @@ this decision borrows nothing from the validation or test year.
 | Veterans Day | 4 | 91% | 85% | 95% | ordinary day |
 | Columbus Day | 4 | 99% | 96% | 104% | ordinary day |
 | State Fair | 3 | 103% | 98% | 105% | ordinary day |
-
 
 ![Traffic on each named day as a share of an ordinary day of the same weekday, training years.](../reports/figures/eda_holiday_evidence.png)
 
@@ -410,7 +411,6 @@ validation year. The second is the number used to compare them.
 | Hour-of-week average (baseline) | 514 | 210,685 | 459 | 277 | 0.946 | 0.0 | 0.6 | 5 KB |
 | Lasso | 505 | 212,440 | 461 | 313 | 0.946 | 2.6 | 1.2 | 4 KB |
 
-
 ![Candidate models: validation RMSE (bars) and cross-validation mean and spread (points).](../reports/figures/models_candidates.png)
 
 **What the table shows.**
@@ -443,7 +443,6 @@ default settings) fitted on the training years.
 | + same hour last week | up to 7 days ahead | 341 | 221 | 0.970 |
 | + same hour yesterday | up to 1 day ahead | 316 | 205 | 0.975 |
 | + previous hour | next hour only; needs a live count feed | 241 | 157 | 0.985 |
-
 
 ![Validation RMSE with the counts that would be known at each forecast horizon.](../reports/figures/models_lag_experiment.png)
 
@@ -480,7 +479,6 @@ are fixed, so the searches are repeatable.
 | LightGBM | random | 16 | 48 | 434.5 | 110 |
 | LightGBM | bayesian | 16 | 48 | 425.7 | 69 |
 
-
 ![LightGBM: best cross-validated error found so far, by search strategy.](../reports/figures/tuning_strategies.png)
 
 With equal budgets the three strategies finish within 8.9 vehicles per hour of each other, with
@@ -513,7 +511,6 @@ tree family with its tuned settings and with its default settings, each on **all
 | lgbm, tuned, calendar only | 139,580 | 373.6 | 258.4 | 0.9645 | 316 KB |  |
 | ridge, tuned, all inputs | 209,740 | 458.0 | 307.8 | 0.9466 | 4 KB |  |
 
-
 ![Finalists on the validation year, with their file sizes. The shaded band is the tie zone.](../reports/figures/models_finalists.png)
 
 **The champion is hgb, tuned, all inputs**: validation RMSE 347.4 (MSE 120,687, MAE
@@ -535,7 +532,6 @@ tree family with its tuned settings and with its default settings, each on **all
 | Random forest | 351.7 | 348.6 | 20 MB | 67 MB |
 | HistGradientBoosting | 347.4 | 346.3 | 246 KB | 357 KB |
 | LightGBM | 368.6 | 357.6 | 318 KB | 2.6 MB |
-
 
   Where the tuned settings lose to the defaults, it is because the searches optimise the average of folds
   that are scored on the thin early years, which is not the same thing as predicting 2017 from everything
@@ -568,7 +564,6 @@ opposite. The reason is in the per-year table: every training year is harder to 
 | 2015 | 3,590 | 359 | 226 | 0.967 |
 | 2016 | 7,794 | 372 | 251 | 0.963 |
 
-
 **2. Learning curve: does more history help?** The model is refitted on the most recent *n* training hours and
 scored on the whole validation year each time.
 
@@ -580,7 +575,6 @@ scored on the whole validation year each time.
 | 12,636 | 338 | 373 |
 | 18,954 | 366 | 352 |
 | 25,272 | 371 | 347 |
-
 
 ![Learning curve.](../reports/figures/diag_learning_curve.png)
 
@@ -601,7 +595,6 @@ improves it by only a few vehicles per hour, so more years of the same kind of d
 | 31 | 327 | 349 |
 | 64 | 293 | 359 |
 | 128 | 256 | 368 |
-
 
 ![Complexity curve: underfitting on the left, overfitting on the right.](../reports/figures/diag_complexity_curve.png)
 
@@ -641,7 +634,6 @@ One overall number hides where a model helps and where it fails.
 | Weekend | 2,513 | 2,758 | 402 | 402 | 374 | +7% | 33% |
 | Quiet holiday | 144 | 2,125 | 1,965 | 373 | 385 | +80% | 2% |
 
-
 ![Validation year: error by kind of hour and month by month, baseline against champion.](../reports/figures/diag_slices_validation.png)
 
 - **Quiet holidays are where the model earns most of its advantage.** There the baseline's RMSE is
@@ -670,7 +662,6 @@ named day of 2017. The five days now treated as ordinary are no longer among the
 | Washingtons Birthday | ordinary day | 591 | -370 |
 | Martin Luther King Jr Day | ordinary day | 614 | -364 |
 
-
 **The worst days** are days when far fewer vehicles came than the calendar suggests: the day after
 Thanksgiving, days between Christmas and New Year, and days with incidents or heavy snow. A model that knows
 only the calendar and the weather cannot see them coming.
@@ -685,7 +676,6 @@ only the calendar and the weather cannot see them coming.
 | 2017-03-01 | 777 | -257 |
 | 2017-12-28 | 777 | -547 |
 | 2017-12-02 | 721 | +569 |
-
 
 ![Predicted against actual, error by hour of day, and the distribution of residuals (validation year).](../reports/figures/diag_residuals.png)
 
@@ -738,7 +728,6 @@ champion's family and settings on all nine variables.
 | rain_1h | 0.014 | 0.001 | 0.0 | 5.2 | 8 | 9 | 8 | 8 | 8 | 8.2 |
 | snow_1h | 0.002 | 0.001 | 0.0 | 0.7 | 9 | 8 | 8 | 9 | 9 | 8.6 |
 
-
 ![Rank of each variable by the five methods (1 is the most important).](../reports/figures/study_variable_ranks.png)
 
 **The hour is ranked first by 5 of the 5 methods and the weekday second.** Below the top
@@ -775,7 +764,6 @@ one variable. For contrast, the same four models are fitted on the main weather 
 | univariate (raw weather) | temp | linear | 1 | 3,868,168 | 1,967 | 1,716 | 0.016 |
 | univariate (raw weather) | temp | spline | 1 | 3,816,826 | 1,954 | 1,702 | 0.029 |
 | univariate (raw weather) | temp | tree | 1 | 3,850,266 | 1,962 | 1,706 | 0.020 |
-
 
 ![Validation R² of the univariate, bivariate and multivariate models, by family.](../reports/figures/study_variable_models.png)
 
@@ -815,7 +803,6 @@ Adding the variables one at a time, in the order of the ranking:
 | 8 | rain_1h | 349.1 | 0.9690 |
 | 9 | snow_1h | 347.4 | 0.9693 |
 
-
 ![Validation RMSE as variables are added one at a time.](../reports/figures/study_incremental.png)
 
 And adding them in groups, with the error reported separately for the hours with rain, storm or snow, where
@@ -827,7 +814,6 @@ the weather ought to matter most:
 | + month | 3 | 432.7 | 0.9524 | 436.8 | 417.4 |
 | + holiday (all calendar inputs) | 4 | 356.2 | 0.9677 | 349.2 | 380.9 |
 | + weather (all inputs) | 9 | 347.4 | 0.9693 | 339.6 | 374.5 |
-
 
 ![What each group of inputs adds.](../reports/figures/study_group_ablation.png)
 
@@ -893,7 +879,6 @@ set had not guided them. The reported result is the second evaluation.
 | Champion's settings, calendar only (no weather) | 11 | 142,459 | 377 | 223 | 0.963 |
 | **Champion** | 18 | 135,400 | 368 | 221 | 0.965 |
 
-
 ![Test RMSE of every pre-declared model; the bar on the champion is its 95% interval.](../reports/figures/test_results.png)
 
 **The champion on the test year.**
@@ -942,7 +927,6 @@ forecast lies between the two.
 | Weekend | 1,862 | 453 | 453 | 438 | +3% | 40% |
 | Quiet holiday | 96 | 2,072 | 405 | 352 | +83% | 1% |
 
-
 ![Test year: error by kind of hour and month by month, baseline against champion.](../reports/figures/test_slices.png)
 
 - **Holidays.** The test year contains 4 of the six quiet holidays. On those hours the
@@ -967,7 +951,6 @@ forecast lies between the two.
 | August | 740 | 257 | 243 | 227 | +12% |
 | September | 720 | 419 | 293 | 275 | +34% |
 
-
 The champion beats the baseline in 9 of 9 months. The gain is large in the months
 that contain a quiet holiday (January, May, July, September) and small elsewhere.
 
@@ -977,7 +960,6 @@ that contain a quiet holiday (January, May, July, September) and small elsewhere
 | Low visibility | 604 | 271 | 234 | 230 | 4% |
 | Rain or storm | 1,089 | 438 | 264 | 265 | 9% |
 | Snow | 516 | 917 | 926 | 875 | 45% |
-
 
 - **Bad weather.** In rain or storm the champion's error is about the same as in clear or cloudy hours.
   **Snow is different: RMSE 875.** The 516 snow hours are
@@ -1035,7 +1017,7 @@ parity check confirms the result.
 
 ### 8.3 Deployment
 
-**The service has not been deployed to the cloud yet.** It is built, tested and packaged for Vercel; the measurements below come from a copy running on the author's computer. Deploying it is one command.
+The service is deployed at https://traffic-volume-i94.vercel.app.
 
 The model is served by a **FastAPI** application. It loads the two ONNX files and the metadata once, computes
 the features with the same code the notebook uses, and answers in a few milliseconds.
@@ -1070,7 +1052,7 @@ the features with the same code the notebook uses, and answers in a few millisec
 page calls it from the browser exactly as a traffic-management dashboard would; the notebook calls it from
 Python as a planning script would.
 
-**Checks.** An outside-in check script (`scripts/check_live.py`) ran 32 checks against the local copy: 32 passed, 0 failed. Automated tests cover the API in-process, including the bad-input cases, and
+**Checks.** An outside-in check script (`scripts/check_live.py`) ran 32 checks against https://traffic-volume-i94.vercel.app: 32 passed, 0 failed. Automated tests cover the API in-process, including the bad-input cases, and
 check that the service's feature code is a byte-for-byte copy of the package's and that its model files are
 the exported ones.
 
@@ -1083,7 +1065,7 @@ data still like the training data, and is the model still accurate? The answers 
 Section 10 of the notebook runs each check on the 2018 hours, as the report that would be re-run
 on a schedule.
 
-**Response latency.** 300 real hours were sent one at a time to a copy of the service running on the same computer: first request 64 ms, then a median of 17 ms and a 95th percentile of 33 ms from the caller's side (the service's own processing: median 3.6 ms); 0 failed requests. Every answer matched the offline model to within 0.0022 vehicles per hour. Because the copy ran on the same computer, these figures contain no network delay and no cold start; a cloud deployment adds both.
+**Response latency.** 300 real hours were sent one at a time to https://traffic-volume-i94.vercel.app/api/v1/predict: first request 567 ms, then a median of 514 ms and a 95th percentile of 1211 ms from the caller's side (the service's own processing: median 1.6 ms); 0 failed requests. Every answer matched the offline model to within 0.0022 vehicles per hour. The caller's figures include the network path from the author's computer to the hosting region and back, which is most of the time; the service's own processing is the part the model accounts for.
 
 **Data drift.** The population stability index (PSI) compares the distribution of each feature in a later
 period with the training data: below 0.1 is stable, above 0.25 a large shift. It needs no counts, so it is
@@ -1125,7 +1107,7 @@ for the feedback is the next step for a real deployment.
 |---|---|
 | Working code as a notebook | `notebooks/01_traffic_volume_regression.ipynb`: self-contained, executed from top to bottom with full budgets, every figure and table saved in it |
 | The same code as a tested package | `src/traffic_volume/`, run by `traffic-volume all`; the notebook's function cells are copied from it word for word |
-| Deployment endpoint | `service/` (FastAPI); not deployed yet |
+| Deployment endpoint | `service/` (FastAPI); https://traffic-volume-i94.vercel.app |
 | Process documentation | This document |
 | Presentation | Slides with speaker notes, and a question-and-answer preparation file |
 
@@ -1159,7 +1141,7 @@ for the feedback is the next step for a real deployment.
 - **The model does not extrapolate.** A new lane, a new interchange or a lasting change in commuting habits
   would shift the whole pattern, and the model would be wrong until retrained.
 - **Monitoring is demonstrated, not operated.** Feedback is kept in memory only, and the latency figures in
-  this document are median 17 ms, 95th percentile 33 ms, first request 64 ms (local copy).
+  this document are median 514 ms, 95th percentile 1211 ms, first request 567 ms (live).
 
 ### What I would do next
 
