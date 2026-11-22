@@ -89,7 +89,7 @@
       </div>
       <div class="peak" aria-live="polite">
         <div class="label" id="peak-label">Busiest hour</div>
-        <div class="value" id="peak-value">…</div>
+        <div class="value" id="peak-value">...</div>
         <div class="label" id="peak-detail"></div>
       </div>
     </div>
@@ -125,7 +125,7 @@
 
     <section class="chart-card" aria-labelledby="chart-title">
       <h2 id="chart-title">Vehicles per hour</h2>
-      <p class="status" id="status" aria-live="polite">Loading the forecast…</p>
+      <p class="status" id="status" aria-live="polite">Loading the forecast...</p>
       <div class="legend">
         <span><span class="swatch" style="background: var(--sign)"></span>Forecast</span>
         <span><span class="swatch" style="background: var(--amber)"></span>Busiest hour</span>
@@ -161,7 +161,7 @@
 
   <footer>
     Data: Hogue, J. (2019), <em>Metro Interstate Traffic Volume</em>, UCI Machine Learning Repository, CC BY 4.0.
-    For developers: <a href="docs">interactive API documentation</a> · <a href="api/v1/model">model card (JSON)</a> ·
+    For developers: <a href="docs">interactive API documentation</a>, <a href="api/v1/model">model card (JSON)</a>,
     <a href="health">health</a>.
   </footer>
 </div>
@@ -260,7 +260,7 @@ form.addEventListener("submit", async (event) => {
     return;
   }
   button.disabled = true;
-  button.textContent = "Forecasting…";
+  button.textContent = "Forecasting...";
   try {
     const useWeather = form.use_weather.checked;
     const [day, calendarOnly] = await Promise.all([forecast(useWeather), useWeather ? forecast(false) : null]);
