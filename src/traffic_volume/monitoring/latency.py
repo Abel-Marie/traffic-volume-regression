@@ -34,7 +34,9 @@ def post_json(url: str, body: dict, timeout: float = 30.0) -> tuple[dict, float,
 
 
 def replay_requests(base_url: str, rows: pd.DataFrame, expected: np.ndarray | None = None) -> dict:
-    """Send each hour as one request; the first request is reported separately (cold start)."""
+    """Send each hour as one request. The first request is reported separately, because it may have to wait
+    for the platform to start an instance; requests slower than five seconds are counted, so that a long tail
+    is reported and not hidden behind the percentiles."""
     url = base_url.rstrip("/") + "/api/v1/predict"
     client, server, diffs, errors = [], [], [], 0
     for i, row in enumerate(rows.to_dict("records")):
@@ -51,9 +53,12 @@ def replay_requests(base_url: str, rows: pd.DataFrame, expected: np.ndarray | No
     if not client:
         raise RuntimeError(f"no successful requests to {url}")
     warm = np.array(client[1:]) if len(client) > 1 else np.array(client)
+    slow_threshold_ms = 5000.0
     return {"url": url, "requests": len(rows), "errors": errors, "error_rate": errors / len(rows),
             "first_request_ms": float(client[0]), "warm_p50_ms": float(np.percentile(warm, 50)),
             "warm_p95_ms": float(np.percentile(warm, 95)), "warm_p99_ms": float(np.percentile(warm, 99)),
+            "warm_max_ms": float(warm.max()), "slow_threshold_ms": slow_threshold_ms,
+            "slow_requests": int((warm > slow_threshold_ms).sum()),
             "server_p50_ms": float(np.percentile(server, 50)) if server else None,
             "max_abs_diff_vs_offline": float(max(diffs)) if diffs else None,
             "client_latencies_ms": [float(v) for v in client]}

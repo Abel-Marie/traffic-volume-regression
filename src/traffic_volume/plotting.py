@@ -98,7 +98,8 @@ def plot_low_volume(clean_before: pd.DataFrame, target: str, threshold: int):
     fig, axes = plt.subplots(1, 2, figsize=(11, 3.4))
     axes[0].hist(np.log10(v.clip(lower=1)), bins=80, color=PALETTE["green"])
     axes[0].axvline(np.log10(threshold), color=PALETTE["red"], ls="--", label=f"{threshold} vehicles")
-    axes[0].set(xlabel="Vehicles per hour (log10)", ylabel="Hours", title="A handful of hours far below the rest")
+    axes[0].set_yscale("log")
+    axes[0].set(xlabel="Vehicles per hour (log10)", ylabel="Hours (log scale)", title="A handful of hours far below the rest")
     axes[0].legend()
     low = clean_before[v < threshold]
     per_day = low.groupby(low["date_time"].dt.strftime("%Y-%m-%d")).size().sort_values(ascending=False).head(8)[::-1]
@@ -258,8 +259,8 @@ def plot_finalists(comparison: list[dict], champion_label: str, tolerance: float
 def plot_learning_curve(lc: dict):
     fig, ax = plt.subplots(figsize=(6.5, 3.8))
     sizes = np.array(lc["train_sizes"])
-    ax.plot(sizes, lc["train_rmse"], marker="o", color=PALETTE["blue"], label="Training hours used")
-    ax.plot(sizes, lc["val_rmse"], marker="o", color=PALETTE["red"], label="Validation year")
+    ax.plot(sizes, lc["train_rmse"], marker="o", color=PALETTE["blue"], label="Error on the training hours used")
+    ax.plot(sizes, lc["val_rmse"], marker="o", color=PALETTE["red"], label="Error on the validation year")
     ax.set(xlabel="Most recent training hours used", ylabel="RMSE", ylim=(0, None),
            title="Learning curve: error against the amount of history")
     ax.legend()
@@ -396,10 +397,10 @@ def plot_variable_models(table: pd.DataFrame):
 def plot_incremental(inc: pd.DataFrame):
     fig, ax = plt.subplots(figsize=(8.5, 3.8))
     ax.plot(inc["variables"], inc["rmse"], marker="o", color=PALETTE["green"])
-    for _, r in inc.iterrows():
-        ax.annotate(f"+{r['added']}", (r["variables"], r["rmse"]), textcoords="offset points", xytext=(0, 8),
-                    ha="center", fontsize=8)
-    ax.set(xlabel="Variables used (added in order of importance)", ylabel="Validation RMSE", ylim=(0, None),
+    for i, (_, r) in enumerate(inc.iterrows()):   # labels alternate between two heights so that they never overlap
+        ax.annotate(f"+{r['added']}", (r["variables"], r["rmse"]), textcoords="offset points",
+                    xytext=(0, 8 if i % 2 == 0 else 22), ha="center", fontsize=8)
+    ax.set(xlabel="Variables used (added in order of importance)", ylabel="Validation RMSE", ylim=(0, inc["rmse"].max() * 1.12),
            title="Error as variables are added one at a time")
     return fig
 
@@ -439,8 +440,8 @@ def plot_test_results(test: dict):
     j = names.index("champion")
     ax.errorbar([j], [rmse[j]], yerr=[[rmse[j] - ci["low"]], [ci["high"] - rmse[j]]], color=PALETTE["ink"],
                 capsize=4, fmt="none")
-    for i, v in enumerate(rmse):
-        ax.text(i, v + 12, f"{v:.0f}", ha="center", fontsize=9)
+    for i, v in enumerate(rmse):   # the champion's value sits above its interval bar, not across it
+        ax.text(i, (ci["high"] if i == j else v) + 12, f"{v:.0f}", ha="center", fontsize=9)
     ax.tick_params(axis="x", labelsize=8)
     ax.set(ylabel="Test RMSE (vehicles per hour)", ylim=(0, max(rmse) * 1.12),
            title="Test year, every pre-declared model (bar: 95% block-bootstrap CI)")
