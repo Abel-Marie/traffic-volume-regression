@@ -71,6 +71,6 @@ ignore = ["E501", "B905"]
 testpaths = ["tests"]
 markers = [
     "slow: runs the pipeline end to end (minutes)",
-    "needs_artifacts: needs a completed pipeline run (make pipeline)",
+    "needs_artifacts: needs a completed pipeline run (traffic-volume all)",
 ]
 filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning"]

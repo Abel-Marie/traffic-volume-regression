@@ -30,7 +30,7 @@ cleaning:
   # regular hour of the week averages about 280 vehicles. Such hours occur only in 2015 and 2016.
   min_plausible_volume: 100
   # The source marks eleven named days. Only on these six does traffic fall well below a normal day
-  # (47 to 68% of normal in the training years); the other five are ordinary commuting days (82 to 103%)
+  # (47 to 68% of normal in the training years); the other five are ordinary commuting days (80 to 103%)
   # and are treated as such. The evidence table is produced from the training years in the notebook.
   quiet_holidays: [New Years Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, Christmas Day]
   # When one hour has several weather rows, keep the most severe condition (first in this list).
@@ -117,7 +117,7 @@ first_evaluation:
 
 service:
   # Base URL of the deployed API. The notebooks call it in Sections 8.3 and 10; the SERVICE_URL
-  # environment variable overrides it. Empty means not deployed yet.
+  # environment variable overrides it. Leave it empty to run without a service.
   url: "https://traffic-volume-i94.vercel.app"
 
 fast:   # ML_FAST=1 or --fast: tiny budgets for tests and CI; never used for reported results

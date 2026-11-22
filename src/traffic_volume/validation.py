@@ -32,7 +32,7 @@ def validate_raw(df: pd.DataFrame, cfg: Config) -> dict:
     hourly = df.assign(year=year, stamp=stamps).drop_duplicates("date_time")
     low = hourly["traffic_volume"] < cfg.cleaning.min_plausible_volume
     regular = hourly[~low]
-    quietest = regular.groupby([regular["stamp"].dt.weekday, regular["stamp"].dt.hour])["traffic_volume"].mean().min()
+    quietest = regular.groupby([regular["stamp"].dt.dayofweek, regular["stamp"].dt.hour])["traffic_volume"].mean().min()
     rainy, snowy = df["weather_main"].isin(RAINY), df["weather_main"] == "Snow"
     amounts = [{"year": int(y), "rain_weather_rows": int(rainy[year == y].sum()),
                 "of_which_rain_1h_recorded": int((rainy & (df["rain_1h"] > 0))[year == y].sum()),

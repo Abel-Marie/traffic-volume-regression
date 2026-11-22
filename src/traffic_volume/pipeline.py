@@ -149,7 +149,7 @@ def stage_eda(cfg: Config, ctx: RunContext) -> dict:
     finish_figure(plot_holiday_evidence(evidence, cfg.cleaning.quiet_holidays), "eda_holiday_evidence", ctx)
     finish_figure(plot_target_distribution(trval[t], trval["date_time"].dt.hour), "eda_target_distribution", ctx)
     finish_figure(plot_hour_profiles(trval, t), "eda_hour_profiles", ctx)
-    table = hour_weekday_table(trval["date_time"].dt.hour, trval["date_time"].dt.weekday, trval[t])
+    table = hour_weekday_table(trval["date_time"].dt.hour, trval["date_time"].dt.dayofweek, trval[t])
     finish_figure(plot_heatmap(table, "Mean volume by weekday and hour (training and validation years)"),
                   "eda_hour_weekday_heatmap", ctx)
     finish_figure(plot_weather_effects(trval, t), "eda_weather_effects", ctx)
@@ -161,7 +161,7 @@ def stage_eda(cfg: Config, ctx: RunContext) -> dict:
                "hour_profiles": {k: [float(x) for x in profiles[k]] for k in profiles.columns},
                "hour_weekday_mean": [[float(x) for x in row] for row in table.to_numpy()],
                "weekday_daytime_median_by_weather": {
-                   k: float(v) for k, v in trval[trval["date_time"].dt.hour.between(7, 18) & (trval["date_time"].dt.weekday < 5)]
+                   k: float(v) for k, v in trval[trval["date_time"].dt.hour.between(7, 18) & (trval["date_time"].dt.dayofweek < 5)]
                    .groupby("weather_main")[t].median().sort_values().items()}},
               ctx.metrics_dir / "eda.json")
     return {"figures": 11}

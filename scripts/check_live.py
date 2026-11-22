@@ -1,7 +1,7 @@
-"""Check a running copy of the API from the outside, as an examiner would.
+"""Check a running copy of the API from the outside, the way a client would meet it.
 
     python scripts/check_live.py http://127.0.0.1:8765
-    python scripts/check_live.py https://<your-app>.vercel.app
+    python scripts/check_live.py https://traffic-volume-i94.vercel.app
 
 Checks the demo page, the documentation, health, the model card, single-hour, whole-day and batch
 predictions, agreement with the exported models on real validation hours, the holiday logic, the

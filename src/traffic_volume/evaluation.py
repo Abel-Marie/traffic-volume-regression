@@ -161,7 +161,7 @@ def fit_verdict(train_rmse: float, val_rmse: float, curve: dict | None) -> dict:
 def day_segments(clean_rows: pd.DataFrame) -> np.ndarray:
     """Each hour's kind of time: quiet holiday, weekend, or one of four parts of a working day."""
     t = clean_rows["date_time"]
-    hour, weekend = t.dt.hour, t.dt.weekday >= 5
+    hour, weekend = t.dt.hour, t.dt.dayofweek >= 5
     return np.select(
         [clean_rows["quiet_holiday"].to_numpy(), weekend.to_numpy(), hour.isin([6, 7, 8, 9, 15, 16, 17, 18]).to_numpy(),
          hour.between(10, 14).to_numpy(), hour.between(19, 22).to_numpy()],
@@ -220,7 +220,7 @@ def residual_report(clean_rows: pd.DataFrame, y, pred, target: str, top: int = 1
     frame["hour"] = frame["date_time"].dt.hour
     frame["day_type"] = np.where(clean_rows["quiet_holiday"].to_numpy(), "quiet holiday",
                                  np.where(frame["holiday"] != "None", "other named day",
-                                          np.where(frame["date_time"].dt.weekday >= 5, "weekend", "weekday")))
+                                          np.where(frame["date_time"].dt.dayofweek >= 5, "weekend", "weekday")))
     by_hour = frame.groupby("hour")["residual"].agg(mean="mean", rmse=lambda r: float(np.sqrt(np.mean(r ** 2))))
     by_type = frame.groupby("day_type")["residual"].agg(rows="size", mean="mean",
                                                         rmse=lambda r: float(np.sqrt(np.mean(r ** 2))))

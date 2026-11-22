@@ -40,7 +40,7 @@ def service_ready() -> bool:
 @pytest.fixture(scope="session")
 def service_app():
     if not service_ready():
-        pytest.skip("service not synced: run `make pipeline sync-service`")
+        pytest.skip("service not synced: run `traffic-volume all`, then `python scripts/sync_service.py`")
     sys.path.insert(0, str(SERVICE))
     import main  # noqa: PLC0415
 

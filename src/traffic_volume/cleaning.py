@@ -97,7 +97,7 @@ def parse_calendar(clean: pd.DataFrame) -> pd.DataFrame:
     """The raw variables the feature code and the API use: calendar parts plus the weather columns."""
     t = clean["date_time"]
     return pd.DataFrame({
-        "hour": t.dt.hour, "weekday": t.dt.weekday, "month": t.dt.month,
+        "hour": t.dt.hour, "weekday": t.dt.dayofweek, "month": t.dt.month,
         "is_holiday": clean["quiet_holiday"].astype(int),
         "temp": clean["temp"], "rain_1h": clean["rain_1h"], "snow_1h": clean["snow_1h"],
         "clouds_all": clean["clouds_all"], "weather_main": clean["weather_main"],
@@ -130,7 +130,7 @@ def holiday_evidence(clean_train: pd.DataFrame, target: str) -> pd.DataFrame:
     Computed on the training years only. This is the evidence behind the fixed list of quiet
     holidays in the configuration; the list is not re-estimated when the pipeline runs.
     """
-    t = clean_train.assign(wd=clean_train["date_time"].dt.weekday, h=clean_train["date_time"].dt.hour,
+    t = clean_train.assign(wd=clean_train["date_time"].dt.dayofweek, h=clean_train["date_time"].dt.hour,
                            day=clean_train["date_time"].dt.normalize())
     normal = t[t["holiday"] == "None"].groupby(["wd", "h"])[target].mean().rename("normal")
     named = t[t["holiday"] != "None"].join(normal, on=["wd", "h"])

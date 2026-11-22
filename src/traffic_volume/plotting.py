@@ -141,7 +141,7 @@ def hour_profiles(clean: pd.DataFrame, target: str) -> pd.DataFrame:
     t = clean["date_time"]
     kind = np.where(clean["quiet_holiday"], "Quiet holiday",
                     np.where(clean["holiday"] != "None", "Other named day",
-                             np.where(t.dt.weekday >= 5, "Weekend", "Weekday")))
+                             np.where(t.dt.dayofweek >= 5, "Weekend", "Weekday")))
     return clean.assign(hour=t.dt.hour, kind=kind).groupby(["kind", "hour"])[target].mean().unstack(0)
 
 
@@ -175,7 +175,7 @@ def plot_heatmap(table: pd.DataFrame, title: str, ax=None, vmax=None):
 
 
 def plot_weather_effects(clean: pd.DataFrame, target: str):
-    day = clean[clean["date_time"].dt.hour.between(7, 18) & (clean["date_time"].dt.weekday < 5)]
+    day = clean[clean["date_time"].dt.hour.between(7, 18) & (clean["date_time"].dt.dayofweek < 5)]
     fig, axes = plt.subplots(1, 2, figsize=(11, 3.6))
     order = day.groupby("weather_main")[target].median().sort_values().index
     sns.boxplot(data=day, x="weather_main", y=target, order=order, ax=axes[0], color=PALETTE["light"], fliersize=1)
