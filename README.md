@@ -61,7 +61,7 @@ nearly all of the rest, and the weather adds 2.5%.
 | `src/traffic_volume/` | The same work as a tested package; `rowlevel.py` is the feature code shared with the service |
 | `service/` | The deployed API (FastAPI, ONNX): all that ships |
 | `configs/config.yaml` | Every setting: cleaning rules, split years, budgets, success criteria |
-| `reports/` | Figures and results files (the only source of numbers in the documents) |
+| `reports/` | Figures and results files (the source of the results in the documents) |
 | `tests/` | Unit, integration (pipeline, API) and parity tests |
 
 ## Run it
@@ -134,8 +134,8 @@ cd ..
 python scripts/check_live.py https://traffic-volume-i94.vercel.app   # outside-in check of the live service
 ```
 
-Measured against the live service, from the author's computer:
-median 514 ms, 95th percentile 1211 ms, first request 567 ms (live).
+Measured against the live service from the author's computer, in the notebook's run:
+median 582 ms, 95th percentile 1130 ms, first request 841 ms (live, from the notebook run).
 
 ## Tests and checks
 

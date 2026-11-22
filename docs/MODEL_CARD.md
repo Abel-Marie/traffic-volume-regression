@@ -60,14 +60,14 @@ validation data only, and the figures above are the second evaluation. See `docs
 
 ### By kind of hour (champion, test year)
 
-| Kind of hour | Hours | Baseline RMSE | Holiday-aware table | Champion RMSE | Champion vs baseline | Share of champion's squared error |
+| Kind of hour | Hours | Baseline RMSE | Holiday-aware table | Champion RMSE | RMSE reduction against the baseline | Share of champion's squared error |
 |---|---|---|---|---|---|---|
-| Weekday rush hours | 1,525 | 508 | 501 | 448 | +12% | 35% |
-| Weekday midday | 955 | 313 | 318 | 285 | +9% | 9% |
-| Weekday evening | 764 | 365 | 365 | 341 | +7% | 10% |
-| Weekday night | 1,331 | 189 | 181 | 180 | +5% | 5% |
-| Weekend | 1,862 | 453 | 453 | 438 | +3% | 40% |
-| Quiet holiday | 96 | 2,072 | 405 | 352 | +83% | 1% |
+| Weekday rush hours | 1,525 | 508 | 501 | 448 | 12% | 35% |
+| Weekday midday | 955 | 313 | 318 | 285 | 9% | 9% |
+| Weekday evening | 764 | 365 | 365 | 341 | 7% | 10% |
+| Weekday night | 1,331 | 189 | 181 | 180 | 5% | 5% |
+| Weekend | 1,862 | 453 | 453 | 438 | 3% | 40% |
+| Quiet holiday | 96 | 2,072 | 405 | 352 | 83% | 1% |
 
 ### By weather (test year)
 

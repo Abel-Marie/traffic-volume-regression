@@ -11,8 +11,9 @@ Addis Ababa University, College of Technology and Built Environment
 **What this document is.** A step-by-step account of how the model was built, following the structure and
 numbering of the assignment sheet (steps 1 to 6, 8, 10 and 11). For each step it says what was done, why,
 which alternatives were considered and what the result was. It is written to be read without the code open.
-Every number in it is generated from the project's results files, so it agrees with the notebook, the
-deployed service and the slides.
+Every result in it is generated from the project's results files, so it agrees with the notebook, the
+deployed service and the slides. Run times and response latency are wall-clock measurements, not results:
+the ones quoted here are those of the submitted notebook's own run, and another run would give other values.
 
 **The result in one paragraph.** The model forecasts westbound vehicles per hour on I-94 from the calendar
 and the weather. On 2018, a year it never saw, its RMSE is **368 vehicles per hour** and
@@ -227,12 +228,14 @@ The cleaning log, as the code records it:
 |---|---|---|---|---|
 | drop exact duplicate rows | 48,204 | 48,187 | 17 rows removed | The same record stored twice. |
 | drop zero kelvin temperature | 48,187 | 48,177 | 10 rows removed | 0 K is a sensor error, not weather. |
-| drop impossible rainfall | 48,177 | 48,176 | 1 rows removed | More than 100 mm in one hour is a sensor error. |
+| drop impossible rainfall | 48,177 | 48,176 | 1 row removed | More than 100 mm in one hour is a sensor error. |
 | drop closure or outage hours | 48,176 | 48,116 | 60 rows removed | Fewer than 100 vehicles in an hour: the road was closed or the counter was down. |
 | spread holiday to whole day | 48,116 | 48,116 | 1,348 values changed | The source marks a holiday only on its midnight row; every hour of that day is a holiday. |
 | name holidays with no midnight row | 48,116 | 48,116 | 55 values changed | A holiday whose midnight hour is missing from the data was never marked; the calendar names it. |
 | one row per hour | 48,116 | 40,518 | 7,598 rows removed | Hours with several weather rows repeat the same volume; keep one row, with the most severe weather. |
 | treat only quiet holidays as holidays | 40,518 | 40,518 | 550 values changed | Named days on which traffic stays near normal (Columbus Day, Veterans Day and others) are ordinary days for the model; only the quiet holidays listed in the configuration count. |
+
+The 46 closure hours of section 3.1 occupy 60 rows at this point, because some of those hours are written once per weather condition and the rule runs before the step that keeps one row per hour.
 
 After cleaning there are **40,518 hours**, each appearing once, with no missing
 value in any column.
@@ -268,8 +271,11 @@ the list is fixed in the configuration.
 
 ### 3.3 Exploratory data analysis, part 2: distributions, relationships and trends
 
-From here on the exploration uses only the years **before the test year**. Nothing about 2018 was looked at
-until the final evaluation, so no modelling decision could be shaped by it.
+From here on the exploration uses only the years **before the test year**. Up to this point 2018 has been
+touched only by the audit and the cleaning rules of 3.1 and 3.2, which run on the whole file and involve no
+modelling choice, and the split in 3.5 reports its row count and mean volume. Its traffic patterns were not
+explored and no model was scored on it until the final evaluation, so no modelling decision could be shaped
+by it.
 
 **Distribution of the target.** Hourly volume has two humps, which turn out to be night and day.
 
@@ -399,17 +405,17 @@ validation year. The second is the number used to compare them.
 
 | Model | CV RMSE | Validation MSE | Validation RMSE | Validation MAE | Validation R² | Fit (s) | Predict (ms per 1,000 h) | Size |
 |---|---|---|---|---|---|---|---|---|
-| HistGradientBoosting | 439 | 119,920 | 346 | 224 | 0.969 | 1.5 | 4.5 | 357 KB |
-| Random forest | 427 | 121,488 | 349 | 226 | 0.969 | 2.5 | 13.8 | 67 MB |
-| LightGBM | 455 | 127,907 | 358 | 230 | 0.967 | 1.1 | 15.0 | 2.6 MB |
-| Neural network (MLP) | 462 | 137,487 | 371 | 247 | 0.965 | 12.0 | 4.3 | 168 KB |
-| Decision tree | 448 | 140,859 | 375 | 245 | 0.964 | 0.3 | 2.0 | 140 KB |
-| Hour-of-week average with quiet holidays | 433 | 141,367 | 376 | 244 | 0.964 | 0.0 | 1.3 | 10 KB |
-| Polynomial Ridge | 462 | 149,993 | 387 | 267 | 0.962 | 0.5 | 5.1 | 5 KB |
-| Linear regression | 503 | 209,698 | 458 | 308 | 0.947 | 0.2 | 2.1 | 4 KB |
-| Ridge | 503 | 209,740 | 458 | 308 | 0.947 | 0.1 | 1.6 | 4 KB |
-| Hour-of-week average (baseline) | 514 | 210,685 | 459 | 277 | 0.946 | 0.0 | 0.6 | 5 KB |
-| Lasso | 505 | 212,440 | 461 | 313 | 0.946 | 2.6 | 1.2 | 4 KB |
+| HistGradientBoosting | 439 | 119,920 | 346 | 224 | 0.969 | 1.4 | 5.0 | 357 KB |
+| Random forest | 427 | 121,488 | 349 | 226 | 0.969 | 4.2 | 21.9 | 67 MB |
+| LightGBM | 455 | 127,907 | 358 | 230 | 0.967 | 1.2 | 17.2 | 2.6 MB |
+| Neural network (MLP) | 462 | 137,487 | 371 | 247 | 0.965 | 7.0 | 1.7 | 168 KB |
+| Decision tree | 448 | 140,859 | 375 | 245 | 0.964 | 0.2 | 1.8 | 140 KB |
+| Hour-of-week average with quiet holidays | 433 | 141,367 | 376 | 244 | 0.964 | 0.0 | 0.8 | 10 KB |
+| Polynomial Ridge | 462 | 149,993 | 387 | 267 | 0.962 | 0.3 | 6.3 | 5 KB |
+| Linear regression | 503 | 209,698 | 458 | 308 | 0.947 | 0.2 | 2.2 | 4 KB |
+| Ridge | 503 | 209,740 | 458 | 308 | 0.947 | 0.1 | 2.2 | 4 KB |
+| Hour-of-week average (baseline) | 514 | 210,685 | 459 | 277 | 0.946 | 0.0 | 0.2 | 5 KB |
+| Lasso | 505 | 212,440 | 461 | 313 | 0.946 | 5.4 | 3.8 | 4 KB |
 
 ![Candidate models: validation RMSE (bars) and cross-validation mean and spread (points).](../reports/figures/models_candidates.png)
 
@@ -425,7 +431,8 @@ validation year. The second is the number used to compare them.
 - **Plain linear models barely match the baseline** (Ridge 458): a weighted sum of
   features cannot give working days and weekends different daily shapes.
 - **Cost.** The random forest's file is 68,609 KB against 357 KB for
-  HistGradientBoosting at the same accuracy. Every model trains in seconds on this much data.
+  HistGradientBoosting at the same accuracy. Every model trains in seconds on this much data (the fit and
+  prediction times are those of the notebook's run; they vary from run to run).
 - The cross-validation errors are higher than the validation errors for every model because the early folds
   train on little data and are scored on the thin, gap-ridden years.
 
@@ -473,15 +480,15 @@ are fixed, so the searches are repeatable.
 | Model | Strategy | Configurations | Fits | Best CV RMSE | Seconds |
 |---|---|---|---|---|---|
 | Ridge | grid | 4 | 12 | 503.3 | 1 |
-| Random forest | random | 10 | 30 | 425.6 | 32 |
-| HistGradientBoosting | random | 16 | 48 | 432.9 | 91 |
-| LightGBM | grid | 16 | 48 | 430.0 | 66 |
-| LightGBM | random | 16 | 48 | 434.5 | 110 |
-| LightGBM | bayesian | 16 | 48 | 425.7 | 69 |
+| Random forest | random | 10 | 30 | 425.6 | 26 |
+| HistGradientBoosting | random | 16 | 48 | 432.9 | 76 |
+| LightGBM | grid | 16 | 48 | 430.0 | 83 |
+| LightGBM | random | 16 | 48 | 434.5 | 199 |
+| LightGBM | bayesian | 16 | 48 | 425.7 | 105 |
 
 ![LightGBM: best cross-validated error found so far, by search strategy.](../reports/figures/tuning_strategies.png)
 
-With equal budgets the three strategies finish within 8.9 vehicles per hour of each other, with
+The seconds are wall-clock times of the notebook's run. With equal budgets the three strategies finish within 8.9 vehicles per hour of each other, with
 Bayesian search ahead. Grid search can only find what is on its grid; random search covers more
 of the space for the same cost; Bayesian search uses earlier results to decide where to look next. On a
 problem this regular, with this budget, the choice of search strategy matters less than the choice of
@@ -625,14 +632,14 @@ whenever a request carries no weather.
 
 One overall number hides where a model helps and where it fails.
 
-| Kind of hour | Hours | Mean volume | Baseline RMSE | Holiday-aware table | Champion RMSE | Champion vs baseline | Share of champion's squared error |
+| Kind of hour | Hours | Mean volume | Baseline RMSE | Holiday-aware table | Champion RMSE | RMSE reduction against the baseline | Share of champion's squared error |
 |---|---|---|---|---|---|---|---|
-| Weekday rush hours | 2,014 | 5,654 | 515 | 487 | 436 | +15% | 36% |
-| Weekday midday | 1,265 | 4,858 | 269 | 262 | 245 | +9% | 7% |
-| Weekday evening | 1,012 | 2,875 | 400 | 397 | 376 | +6% | 14% |
-| Weekday night | 1,765 | 987 | 219 | 213 | 210 | +4% | 7% |
-| Weekend | 2,513 | 2,758 | 402 | 402 | 374 | +7% | 33% |
-| Quiet holiday | 144 | 2,125 | 1,965 | 373 | 385 | +80% | 2% |
+| Weekday rush hours | 2,014 | 5,654 | 515 | 487 | 436 | 15% | 36% |
+| Weekday midday | 1,265 | 4,858 | 269 | 262 | 245 | 9% | 7% |
+| Weekday evening | 1,012 | 2,875 | 400 | 397 | 376 | 6% | 14% |
+| Weekday night | 1,765 | 987 | 219 | 213 | 210 | 4% | 7% |
+| Weekend | 2,513 | 2,758 | 402 | 402 | 374 | 7% | 33% |
+| Quiet holiday | 144 | 2,125 | 1,965 | 373 | 385 | 80% | 2% |
 
 ![Validation year: error by kind of hour and month by month, baseline against champion.](../reports/figures/diag_slices_validation.png)
 
@@ -646,7 +653,7 @@ One overall number hides where a model helps and where it fails.
   This matters in section 8.1, because the test year has no last quarter.
 
 **The redefined holiday flag, checked on the validation year.** The table shows the champion's error on each
-named day of 2017. The five days now treated as ordinary are no longer among the worst.
+named day of 2017. Three of the five days now treated as ordinary (Columbus Day, State Fair and Veterans Day) are predicted about as well as the quiet holidays: RMSE 162 to 335, against 293 to 566 on the six holidays. The other two, Washington's Birthday and Martin Luther King Jr Day, are the worst named days of the year (RMSE 591 and 614): the model expects an ordinary working day and predicts about 370 and 364 vehicles an hour more than came. In the training years these days ran at 86% and 80% of normal (section 3.2): they are partial holidays, and a flag that can only say yes or no puts them on the wrong side. This is listed under the limitations.
 
 | Named day (2017) | Treated as | Champion RMSE | Mean error (actual minus predicted) |
 |---|---|---|---|
@@ -918,14 +925,14 @@ forecast lies between the two.
 
 #### Where the model helps and where it does not
 
-| Kind of hour | Hours | Baseline RMSE | Holiday-aware table | Champion RMSE | Champion vs baseline | Share of champion's squared error |
+| Kind of hour | Hours | Baseline RMSE | Holiday-aware table | Champion RMSE | RMSE reduction against the baseline | Share of champion's squared error |
 |---|---|---|---|---|---|---|
-| Weekday rush hours | 1,525 | 508 | 501 | 448 | +12% | 35% |
-| Weekday midday | 955 | 313 | 318 | 285 | +9% | 9% |
-| Weekday evening | 764 | 365 | 365 | 341 | +7% | 10% |
-| Weekday night | 1,331 | 189 | 181 | 180 | +5% | 5% |
-| Weekend | 1,862 | 453 | 453 | 438 | +3% | 40% |
-| Quiet holiday | 96 | 2,072 | 405 | 352 | +83% | 1% |
+| Weekday rush hours | 1,525 | 508 | 501 | 448 | 12% | 35% |
+| Weekday midday | 955 | 313 | 318 | 285 | 9% | 9% |
+| Weekday evening | 764 | 365 | 365 | 341 | 7% | 10% |
+| Weekday night | 1,331 | 189 | 181 | 180 | 5% | 5% |
+| Weekend | 1,862 | 453 | 453 | 438 | 3% | 40% |
+| Quiet holiday | 96 | 2,072 | 405 | 352 | 83% | 1% |
 
 ![Test year: error by kind of hour and month by month, baseline against champion.](../reports/figures/test_slices.png)
 
@@ -939,17 +946,17 @@ forecast lies between the two.
   (35% of the champion's squared error), and the gain at
   weekends is small (3%).
 
-| Month (2018) | Hours | Baseline RMSE | Holiday-aware table | Champion RMSE | Champion vs baseline |
+| Month (2018) | Hours | Baseline RMSE | Holiday-aware table | Champion RMSE | RMSE reduction against the baseline |
 |---|---|---|---|---|---|
-| January | 742 | 696 | 591 | 513 | +26% |
-| February | 672 | 405 | 411 | 399 | +1% |
-| March | 733 | 424 | 421 | 398 | +6% |
-| April | 720 | 602 | 595 | 562 | +7% |
-| May | 743 | 456 | 281 | 277 | +39% |
-| June | 719 | 267 | 248 | 232 | +13% |
-| July | 744 | 501 | 273 | 262 | +48% |
-| August | 740 | 257 | 243 | 227 | +12% |
-| September | 720 | 419 | 293 | 275 | +34% |
+| January | 742 | 696 | 591 | 513 | 26% |
+| February | 672 | 405 | 411 | 399 | 1% |
+| March | 733 | 424 | 421 | 398 | 6% |
+| April | 720 | 602 | 595 | 562 | 7% |
+| May | 743 | 456 | 281 | 277 | 39% |
+| June | 719 | 267 | 248 | 232 | 13% |
+| July | 744 | 501 | 273 | 262 | 48% |
+| August | 740 | 257 | 243 | 227 | 12% |
+| September | 720 | 419 | 293 | 275 | 34% |
 
 The champion beats the baseline in 9 of 9 months. The gain is large in the months
 that contain a quiet holiday (January, May, July, September) and small elsewhere.
@@ -1065,28 +1072,30 @@ data still like the training data, and is the model still accurate? The answers 
 Section 10 of the notebook runs each check on the 2018 hours, as the report that would be re-run
 on a schedule.
 
-**Response latency.** 300 real hours were sent one at a time to https://traffic-volume-i94.vercel.app/api/v1/predict: first request 567 ms, then a median of 514 ms and a 95th percentile of 1211 ms from the caller's side (the service's own processing: median 1.6 ms); 0 failed requests. Every answer matched the offline model to within 0.0022 vehicles per hour. The caller's figures include the network path from the author's computer to the hosting region and back, which is most of the time; the service's own processing is the part the model accounts for.
+**Response latency.** 300 real hours were sent one at a time to https://traffic-volume-i94.vercel.app/api/v1/predict in the notebook's run (its section 10.1): first request 841 ms, then a median of 582 ms, a 95th percentile of 1130 ms and a 99th of 1431 ms from the caller's side; 0 failed requests. The service's own processing took a median of 1.7 ms. Every answer matched the offline model to within 0.0022 vehicles per hour. Almost all of the caller's time is therefore the network path between the author's computer and the hosting region, not the model.
+
+A second replay of 300 hours from the command line (`traffic-volume monitor latency`, saved in `reports/metrics/pipeline/monitoring.json`) gave a median of 514 ms and a 95th percentile of 1211 ms, but 9 of its 300 requests took between 15.6 and 21.5 seconds (99th percentile 15,687 ms). The service's own processing in that run again took a median of 1.6 ms and no request failed, so the waiting happened between the caller and the platform, not in the model. The cause was not traced further. Latency is a wall-clock measurement and differs from run to run; the figures quoted first are the ones the notebook's saved output shows.
 
 **Data drift.** The population stability index (PSI) compares the distribution of each feature in a later
 period with the training data: below 0.1 is stable, above 0.25 a large shift. It needs no counts, so it is
-available the day the inputs arrive. Between the training years and 2017, 0 of 18 features shift strongly (PSI above 0.25) and 1 moderately; the largest shift is `clouds_all` (PSI 0.218). Calendar features cannot drift when the same months are
-compared. The shifts are in weather columns: partly real, since one year is cloudier than another, and partly
-an artefact of how they are recorded.
+available the day the inputs arrive. Between the training years and 2017, 0 of 18 features shift strongly (PSI above 0.25) and 1 moderately; the largest shift is `clouds_all` (PSI 0.218, moderate). When the test year is compared with the same months of the earlier years, the number of features that shift strongly is 1 and moderately 0; the largest shift is `clouds_all` (PSI 0.266, large). Calendar features cannot drift
+when the same months are compared. The shifts are in weather columns: partly real, since one year is cloudier
+than another, and partly an artefact of how they are recorded.
 
 **Performance on real data.** The alert line is the validation RMSE plus 15% (400 vehicles per
 hour). Treating 2018 as the months after deployment and sending every week through the service, 7 of 39 weeks are above the alert line of 400, and the longest run above it is 3 weeks (from the week of 2018-01-08). The rule asks for three weeks in a row, so it would have fired once. The weeks above the line had on average 51 hours of snow each, the weeks below it 5: the cause is the weather, not a change in how the road is used. An alert is a reason to look before acting; here the lasting fix is a snowfall input, not more of the same data. By month, the test year would have crossed the line in: January, April.
 
 **Collecting feedback.** Every prediction carries an id. When the counting station reports the real count, the
 client posts it to `/api/v1/feedback` with that id. The service keeps a running summary of its own error
-(count, MAE, RMSE, bias), and the logged pairs are the labelled data for the next retraining. The notebooks
-exercise this loop with real test-year hours.
+(count, MAE, RMSE, bias), and the logged pairs are the labelled data for the next retraining. The notebook
+exercises this loop with real test-year hours.
 
 **Retraining policy.**
 
 | Signal | How it is measured | Action |
 |---|---|---|
 | Error drift | Weekly RMSE on hours whose real count has arrived | Retrain if it stays above 400 for three weeks in a row |
-| Bias | Weekly mean of actual minus predicted | Investigate if it stays beyond 150 vehicles per hour in one direction: a lasting change to the road, not noise |
+| Bias | Weekly mean of actual minus predicted | Investigate if it stays beyond 150 vehicles per hour in one direction for three weeks in a row: a lasting change to the road, not noise |
 | Input drift | Monthly PSI of every feature the model reads | Investigate any PSI above 0.25 |
 | Calendar | Every January | Retrain on all years to date; add any new public holiday to the list |
 | Service health | 95th-percentile latency and error rate, from the logs | Alert above 1 second or above 1% errors |
@@ -1094,6 +1103,14 @@ exercise this loop with real test-year hours.
 Single weeks above the alert line are investigated, not acted on: one bad week is usually a storm or a
 holiday week, and retraining on it would not help. Retraining itself is one command; it rebuilds the model
 from all data to date, exports it with a new version, and the parity check guards the hand-over.
+
+**What the other rules did in this period.**
+
+*Bias.* The weekly mean error was beyond 150 vehicles per hour in 4 weeks of 39 (the weeks of 5 February +170, 19 February -215, 9 April -425 and 2 July -176). The longest run on one side is 1 week, and the rule asks for three in a row, so it did not fire: the model was not consistently too high or too low.
+
+*Input drift.* `clouds_all` (PSI 0.266) is above the limit of 0.25 when the test year is compared with the same months of the earlier years, so it was looked at. The champion reads this input, but the weather as a whole accounts for about 2.5% of its accuracy, and the weeks with large errors are the weeks with snow, not weeks that stand out for this input. No action was taken beyond keeping it under watch; the calendar-only model does not read it at all.
+
+*Service health.* The 95th percentile was 1130 ms with 0.0% failures. That is above the limit of one second, so the alert fired. The service's own processing took a median of 1.7 ms, so the time is spent on the network path between the caller and the hosting region, not in the model: the remedy would be hosting nearer the callers, and the rule is better applied to latency measured where the clients are.
 
 **What is not built.** The free serverless platform keeps nothing between restarts, so the feedback summary
 lives only as long as one running instance and the durable record is the request log. A small hosted database
@@ -1105,25 +1122,29 @@ for the feedback is the next step for a real deployment.
 
 | Deliverable | Where |
 |---|---|
-| Working code as a notebook | `notebooks/01_traffic_volume_regression.ipynb`: self-contained, executed from top to bottom with full budgets, every figure and table saved in it |
-| The same code as a tested package | `src/traffic_volume/`, run by `traffic-volume all`; the notebook's function cells are copied from it word for word |
-| Deployment endpoint | `service/` (FastAPI); https://traffic-volume-i94.vercel.app |
-| Process documentation | This document |
-| Presentation | Slides with speaker notes, and a question-and-answer preparation file |
+| Working code as a notebook | `1_Code_Notebook.ipynb` in the submission folder (in the source code: `notebooks/01_traffic_volume_regression.ipynb`): self-contained, executed from top to bottom with full budgets, every figure and table saved in it |
+| The same code as a tested package | `4_Source_Code.zip` in the submission folder, which is the project repository: `src/traffic_volume/`, run by `traffic-volume all`; the notebook's function cells are copied from it word for word |
+| Deployment endpoint | `service/` in the source code (FastAPI); https://traffic-volume-i94.vercel.app |
+| Process documentation | This document: `2_Process_Documentation` in the submission folder, `docs/PROCESS` in the source code |
+| Presentation | `3_Presentation.pptx` in the submission folder: slides with speaker notes |
 
 ### Reproducibility and checks
 
 - **One source of numbers.** The pipeline writes its results to one file; this document, the README, the model
   card and the slides are generated from it, and they were checked against each other before submission.
-- **The notebook and the pipeline run the same code** and a test checks that they reach the same split and
-  the same test results.
+  Run times and latency are taken from the notebook's run instead, as said at the start.
+- **The notebook and the pipeline run the same code.** The notebook's function cells are generated from the
+  package's source, and after each full run of the notebook its results file was compared with the
+  pipeline's: same cleaning counts, same test hours (by fingerprint), same test metrics, same model version.
+  The generator and that comparison are development tooling and are not part of the submitted source code.
 - **Fixed seeds and pinned versions.** The random seed is 42; every package version is pinned.
 - **Verified data.** The download is checked against a SHA-256 checksum.
 - **Tests.** Unit tests (cleaning rules, the holiday calendar, features and their declared inputs, the split,
   metrics, both bootstraps, the baselines), API tests including bad input, parity tests between pipeline and
   service, and an end-to-end run of the whole pipeline in a scratch folder.
-- **The notebook runs alone.** A script copies it into an empty folder and executes it there, which is what
-  happens when it is uploaded to Google Colab.
+- **The notebook runs alone.** It was executed in an empty folder that held nothing but the notebook file,
+  which is what happens when it is uploaded to Google Colab: it downloads the data and defines every function
+  itself.
 
 ### Limitations
 
@@ -1133,6 +1154,7 @@ for the feedback is the next step for a real deployment.
   twice (section 8.1). A full year would probably score somewhat worse.
 - **Unusual days are invisible to the model.** The day after Thanksgiving, the days between Christmas and New
   Year, incidents and closures cause the largest errors. The model knows only six holidays.
+- **Partial holidays.** Washington's Birthday and Martin Luther King Jr Day are partial holidays (traffic at 86% and 80% of normal) that the yes/no holiday flag treats as ordinary days; on the validation year the model over-predicted them by about 370 and 364 vehicles an hour. A graded holiday input would be needed to capture them.
 - **Snow.** 45% of the test error comes from 8% of the hours, and the data
   does not record how much snow fell.
 - **Weather is observed, not forecast.** The headline RMSE of 368 assumes the hour's weather
@@ -1141,14 +1163,15 @@ for the feedback is the next step for a real deployment.
 - **The model does not extrapolate.** A new lane, a new interchange or a lasting change in commuting habits
   would shift the whole pattern, and the model would be wrong until retrained.
 - **Monitoring is demonstrated, not operated.** Feedback is kept in memory only, and the latency figures in
-  this document are median 514 ms, 95th percentile 1211 ms, first request 567 ms (live).
+  this document are median 582 ms, 95th percentile 1130 ms, first request 841 ms (live, from the notebook run).
 
 ### What I would do next
 
 1. **A real-time version** that adds the counts of the previous hour and day: the experiment in section 5
    shows the error falling from 346 to 241 for a next-hour forecast.
 2. **A richer calendar:** the day after Thanksgiving, the Christmas to New Year week, school holidays and
-   large local events, which account for most of the worst days.
+   large local events, which account for most of the worst days, and a graded value in place of the yes/no
+   flag for the partial holidays.
 3. **A proper snow input**, from a weather source that records snowfall, since snow is where the error is.
 4. **Prediction intervals** (quantile regression), so that a planner sees a range for each hour.
 5. **More recent data** and a rolling re-evaluation one year at a time, to see how fast the model ages.
