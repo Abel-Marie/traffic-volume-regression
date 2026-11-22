@@ -1126,7 +1126,7 @@ for the feedback is the next step for a real deployment.
 | The same code as a tested package | `4_Source_Code.zip` in the submission folder, which is the project repository: `src/traffic_volume/`, run by `traffic-volume all`; the notebook's function cells are copied from it word for word |
 | Deployment endpoint | `service/` in the source code (FastAPI); https://traffic-volume-i94.vercel.app |
 | Process documentation | This document: `2_Process_Documentation` in the submission folder, `docs/PROCESS` in the source code |
-| Presentation | `3_Presentation.pptx` in the submission folder: slides with speaker notes |
+| Presentation | `3_Presentation.pptx` in the submission folder: slides |
 
 ### Reproducibility and checks
 
